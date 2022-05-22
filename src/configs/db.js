@@ -6,7 +6,7 @@ connection.connect(err => {
     if (err) { 
         console.log(`Error Database Connection: \n ${err}`)
     } else {
-        console.log('Success Connect to Database')
+        console.log('Success Connect to Database') 
     }
 })
 
