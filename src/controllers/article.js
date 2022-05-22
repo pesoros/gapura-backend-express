@@ -8,9 +8,9 @@ module.exports = {
 
             const page = parseInt(request.query.page) || 1
             const search = request.query.search || ''
-            const limit = request.query.limit || 10
+            const limit = request.query.limit || 1
             const sort = request.query.sort || 'DESC'
-            const category = request.query.category_id || 2
+            const category = request.query.categories_id || 1
             const sortBy = request.query.sortBy || 'createdAt'
             const offset = (page - 1) * limit
         try {
@@ -23,8 +23,8 @@ module.exports = {
                 total: Math.ceil(total[0].total),
                 per_page: limit,
                 current_page: page,
-                nextLink: `http://34.202.135.29:4000${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}`,
-                prevLink: `http://34.202.135.29:4000${request.originalUrl.replace('page=' + page, 'page=' + prevPage)}`
+                nextLink: `http://pesoros.com:4000${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}`,
+                prevLink: `http://pesoros.com:4000${request.originalUrl.replace('page=' + page, 'page=' + prevPage)}`
             }
 
             misc.responsePagination(response, 200, false, 'Successfull get all data', pageDetail, data, request.originalUrl)

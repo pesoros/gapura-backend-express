@@ -15,7 +15,7 @@ module.exports = {
     },
     getAll: (offset, limit, sort, sortBy, search, category) => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.*
+            const query = `SELECT art.*, cat.title as categories
             FROM articles art, categories cat
             WHERE art.title LIKE '%${search}%'
             AND art.categories_id = cat.id
