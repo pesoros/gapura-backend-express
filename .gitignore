@@ -2,4 +2,4 @@
 .env
 .env.server
 /tmpnodejsnpm-cache
-/public/images/articles
+/public
