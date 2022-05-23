@@ -1,6 +1,7 @@
 const Article = require('../models/Article')
 const fs = require('fs-extra')
 const misc = require('../helper/misc')
+const randomguy = require('../helper/randomguy')
 
 module.exports = {
 
@@ -33,5 +34,183 @@ module.exports = {
             misc.response(response, 500, true, 'Server error')
         }
 
-    }
+    },
+
+    getSingleArticle: async (request, response) => {
+
+        const article_id = request.params.article_id
+
+        try {
+            const data = await Article.getSingleArticle(article_id)
+            misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)
+
+        } catch(error) {
+            console.error(error)
+            misc.response(response, 500, true, 'Server error')
+        }
+
+    },
+
+    addArticle: async (request, response) => {
+
+        let error = false
+        let fileName = '-'
+
+        if(request) {
+            if(request.file) {
+                const file = request.file.originalname
+                const fileSplit = file.split('.')
+                const fileExtension = fileSplit[fileSplit.length - 1]
+                request.file.originalname = randomguy.randNumb('gapura')+'.'+fileExtension
+                fileName = request.file.originalname
+
+                if(request.file.size >= 5242880) {
+                    const message = 'Oops!, Size cannot more than 5MB'
+                     response.json(message)
+                     error = true
+                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                        if (error) response.json(error)
+                    })
+                }
+
+                if(!isImage(fileExtension)) {
+                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                    response.json(message)
+                    error = true
+                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                        if (error) response.json(error)
+                    })
+                }
+
+                function isImage(fileExtension) {
+                    switch (fileExtension) {
+                        case 'jpg':
+                        case 'jpeg':
+                        case 'png':
+                        case 'gif':
+                        case 'svg':
+                            return true
+                        }
+                        return false
+                }
+            }
+        }
+
+        const categories_id = request.body.categories_id
+        const title = request.body.title
+        const label = request.body.label
+        const sublabel = request.body.sublabel
+        const description = request.body.description
+        const image = fileName
+        const timestamp = request.timestamp
+
+        try {
+            if(error === false) {
+                const response_addArticle = await Article.addArticle(categories_id, title, label, sublabel, description, image, timestamp)
+                const data = {
+                    categories_id,
+                    title,
+                    label,
+                    sublabel,
+                    description,
+                    image
+                }
+                misc.response(response, 200, false, 'Successfull create Article', data)
+            }
+        } catch(error) {
+            console.error(error)
+            misc.response(response, 500, true, 'Server Error')
+        }
+
+    },
+    updateArticle: async (request, response) => {
+
+        let error = false
+        let fileName = '-'
+
+        if(request) {
+            if(request.file) {
+                const file = request.file.originalname
+                const fileSplit = file.split('.')
+                const fileExtension = fileSplit[fileSplit.length - 1]
+                request.file.originalname = randomguy.randNumb('gapura')+'.'+fileExtension
+                fileName = request.file.originalname
+
+                if(request.file.size >= 5242880) {
+                    const message = 'Oops!, Size cannot more than 5MB'
+                     response.json(message)
+                     error = true
+                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                        if (error) response.json(error)
+                    })
+                }
+
+                if(!isImage(fileExtension)) {
+                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                    response.json(message)
+                    error = true
+                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                        if (error) response.json(error)
+                    })
+                }
+
+                function isImage(fileExtension) {
+                    switch (fileExtension) {
+                        case 'jpg':
+                        case 'jpeg':
+                        case 'png':
+                        case 'gif':
+                        case 'svg':
+                            return true
+                        }
+                        return false
+                }
+            }
+        }
+
+        const article_id = request.body.article_id
+
+        const categories_id = request.body.categories_id
+        const title = request.body.title
+        const label = request.body.label
+        const sublabel = request.body.sublabel
+        const description = request.body.description
+        const image = fileName
+        const timestamp = request.timestamp
+
+        try {
+            if(error === false) {
+                await Article.updateArticle(article_id, categories_id, title, label, sublabel, description, image, timestamp)
+
+                const data = {
+                    article_id,
+                    categories_id,
+                    title,
+                    label,
+                    sublabel,
+                    description,
+                    image
+                }
+                misc.response(response, 200, false, 'Successfull update article', data)
+            }
+        } catch(error) {
+            console.error(error)
+            misc.response(response, 500, true, 'Server Error')
+        }
+
+    },
+    deleteArticle: async (request, response) => {
+
+        const article_id = request.body.article_id
+
+        try {
+            await Article.deleteArticle(article_id)
+            redisClient.flushdb()
+            misc.response(response, 200, false, 'Successfull delete Article')
+        } catch(error) {
+            console.error(error)
+            misc.response(response, 500, true, 'Server error')
+        }
+
+    },
 }
