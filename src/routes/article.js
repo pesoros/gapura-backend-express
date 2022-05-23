@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
         const fileExtension = fileSplit[fileSplit.length - 1]
         const fileName = randomguy.randNumb('gapura')+'.'+fileExtension
 
-        callback(null, fileName)
+        callback(null, fileoriname)
     }
 })
 
@@ -28,6 +28,6 @@ Route.get('/', Article.getAll)
 
     .post('/add',upload.single('image'), Article.addArticle)
      .patch('/update', upload.single('image'), Article.updateArticle)
-     .delete('delete/:article_id', Article.deleteArticle)
+     .delete('/delete/:article_id', Article.deleteArticle)
 
 module.exports = Route

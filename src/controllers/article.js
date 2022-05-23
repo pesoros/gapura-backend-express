@@ -20,12 +20,24 @@ module.exports = {
             const nextPage = page === total[0].total ? total[0].total : page + 1
             const data = await Article.getAll(offset, limit, sort, sortBy, search, category)
 
+            if (data.length == 0) {
+                return misc.response(response, 400, false, 'Data not found')
+            }
+
+            data.forEach(element => {
+                if (element.image == null) {
+                    element.imagelink = null
+                } else {
+                    element.imagelink = request.get('host')+ '/images/articles/' + element.image
+                }
+            });
+
             let pageDetail = {
                 total: Math.ceil(total[0].total),
                 per_page: limit,
                 current_page: page,
-                nextLink: `http://pesoros.com:4000${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}`,
-                prevLink: `http://pesoros.com:4000${request.originalUrl.replace('page=' + page, 'page=' + prevPage)}`
+                nextLink: `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}`,
+                prevLink: `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + prevPage)}`
             }
 
             misc.responsePagination(response, 200, false, 'Successfull get all data', pageDetail, data, request.originalUrl)
@@ -42,6 +54,15 @@ module.exports = {
 
         try {
             const data = await Article.getSingleArticle(article_id)
+            if (!data) {
+                return misc.response(response, 400, false, 'Data not found')
+            }
+            if (data.image == null) {
+                data.imagelink = null
+            } else {
+                data.imagelink = request.get('host')+ '/images/articles/' + data.image
+            }
+            
             misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)
 
         } catch(error) {
@@ -61,7 +82,6 @@ module.exports = {
                 const file = request.file.originalname
                 const fileSplit = file.split('.')
                 const fileExtension = fileSplit[fileSplit.length - 1]
-                request.file.originalname = randomguy.randNumb('gapura')+'.'+fileExtension
                 fileName = request.file.originalname
 
                 if(request.file.size >= 5242880) {
@@ -133,7 +153,6 @@ module.exports = {
                 const file = request.file.originalname
                 const fileSplit = file.split('.')
                 const fileExtension = fileSplit[fileSplit.length - 1]
-                request.file.originalname = randomguy.randNumb('gapura')+'.'+fileExtension
                 fileName = request.file.originalname
 
                 if(request.file.size >= 5242880) {
@@ -201,11 +220,10 @@ module.exports = {
     },
     deleteArticle: async (request, response) => {
 
-        const article_id = request.body.article_id
+        const article_id = request.params.article_id
 
         try {
             await Article.deleteArticle(article_id)
-            redisClient.flushdb()
             misc.response(response, 200, false, 'Successfull delete Article')
         } catch(error) {
             console.error(error)
