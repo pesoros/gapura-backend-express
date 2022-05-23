@@ -3,6 +3,7 @@
 .env.server
 /tmpnodejsnpm-cache
 *.jpg
+*.jpeg
 *.png
 *.svg
 *.pdf

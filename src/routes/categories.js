@@ -1,13 +1,13 @@
 const express = require('express')
 const multer = require('multer')
-const Article = require('../controllers/article')
+const Categories = require('../controllers/categories')
 const jwtCheck = require('../helper/jwt')
 const randomguy = require('../helper/randomguy')
 const Route = express.Router()
 
 const storage = multer.diskStorage({
     destination: (request, file, callback) => {
-        callback(null, './public/images/articles')
+        callback(null, './public/images/categories')
     },
     filename: (request, file, callback) => {
         const fileoriname = file.originalname
@@ -23,10 +23,10 @@ const upload = multer({
     storage
 })
 
-Route.get('/', Article.getAll)
-    .get('/show/:article_id', Article.getSingleArticle)
-    .post('/add',upload.single('image'), Article.addArticle)
-    .patch('/update', upload.single('image'), Article.updateArticle)
-    .delete('/delete/:article_id', Article.deleteArticle)
+Route.get('/', Categories.getAll)
+    .get('/show/:categories_id', Categories.getSingleCategories)
+    .post('/add', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'background', maxCount: 1 }]), Categories.addCategories)
+    .patch('/update', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'background', maxCount: 1 }]), Categories.updateCategories)
+    .delete('/delete/:categories_id', Categories.deleteCategories)
 
 module.exports = Route
