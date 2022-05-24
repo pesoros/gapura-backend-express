@@ -25,7 +25,7 @@ const upload = multer({
 
 Route.get('/', About.getAll)
     .get('/show/:about_id', About.getSingleAbout)
-    .patch('/update', upload.fields([{ name: 'image', maxCount: 1 }]), About.updateAbout)
+    .patch('/update', upload.single('image'), About.updateAbout)
 
 module.exports = Route
  

@@ -76,17 +76,17 @@ module.exports = {
         let fileName = '-'
 
         if(request) {
-            if(request.files.image[0]) {
-                const file = request.files.image[0].originalname
+            if(request.file) {
+                const file = request.file.originalname
                 const fileSplit = file.split('.')
                 const fileExtension = fileSplit[fileSplit.length - 1]
-                fileName = request.files.image[0].originalname
+                fileName = request.file.originalname
 
                 if(request.files.size >= 5242880) {
                     const message = 'Oops!, Size cannot more than 5MB'
                      response.json(message)
                      error = true
-                    fs.unlink(`public/images/about/${request.files.image[0].originalname}`, function(error) {
+                    fs.unlink(`public/images/about/${request.file.originalname}`, function(error) {
                         if (error) response.json(error)
                     })
                 }
@@ -95,7 +95,7 @@ module.exports = {
                     const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
                     response.json(message)
                     error = true
-                    fs.unlink(`public/images/about/${request.files.image[0].originalname}`, function(error) {
+                    fs.unlink(`public/images/about/${request.file.originalname}`, function(error) {
                         if (error) response.json(error)
                     })
                 }
