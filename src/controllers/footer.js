@@ -46,6 +46,6 @@ module.exports = {
             console.error(error)
             misc.response(response, 500, true, 'Server Error')
         }
-
+ 
     },
 }
