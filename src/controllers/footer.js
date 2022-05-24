@@ -38,7 +38,7 @@ module.exports = {
                     copyright,
                     address,
                     phone,
-                    dinas
+                    dinas 
                 }
                 misc.response(response, 200, false, 'Successfull update footer', data)
             }
