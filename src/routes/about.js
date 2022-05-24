@@ -28,3 +28,4 @@ Route.get('/', About.getAll)
     .patch('/update', upload.fields([{ name: 'image', maxCount: 1 }]), About.updateAbout)
 
 module.exports = Route
+ 
