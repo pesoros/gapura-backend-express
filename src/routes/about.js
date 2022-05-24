@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
         callback(null, fileoriname)
     }
 })
-
+ 
 const upload = multer({
     storage
 })
