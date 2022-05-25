@@ -104,16 +104,16 @@ module.exports = {
 
         if(request) {
             if(request.file) {
-                const file = request.file.originalname
+                const file = request.file.filename
                 const fileSplit = file.split('.')
                 const fileExtension = fileSplit[fileSplit.length - 1]
-                fileName = request.file.originalname
+                fileName = request.file.filename
 
                 if(request.file.size >= 5242880) {
                     const message = 'Oops!, Size cannot more than 5MB'
                      response.json(message)
                      error = true
-                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                    fs.unlink(`public/images/articles/${request.file.filename}`, function(error) {
                         if (error) response.json(error)
                     })
                 }
@@ -122,7 +122,7 @@ module.exports = {
                     const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
                     response.json(message)
                     error = true
-                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                    fs.unlink(`public/images/articles/${request.file.filename}`, function(error) {
                         if (error) response.json(error)
                     })
                 }
@@ -177,16 +177,16 @@ module.exports = {
 
         if(request) {
             if(request.file) {
-                const file = request.file.originalname
+                const file = request.file.filename
                 const fileSplit = file.split('.')
                 const fileExtension = fileSplit[fileSplit.length - 1]
-                fileName = request.file.originalname
+                fileName = request.file.filename
 
                 if(request.file.size >= 5242880) {
                     const message = 'Oops!, Size cannot more than 5MB'
                      response.json(message)
                      error = true
-                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                    fs.unlink(`public/images/articles/${request.file.filename}`, function(error) {
                         if (error) response.json(error)
                     })
                 }
@@ -195,7 +195,7 @@ module.exports = {
                     const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
                     response.json(message)
                     error = true
-                    fs.unlink(`public/images/articles/${request.file.originalname}`, function(error) {
+                    fs.unlink(`public/images/articles/${request.file.filename}`, function(error) {
                         if (error) response.json(error)
                     })
                 }

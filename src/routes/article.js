@@ -13,9 +13,9 @@ const storage = multer.diskStorage({
         const fileoriname = file.originalname
         const fileSplit = fileoriname.split('.')
         const fileExtension = fileSplit[fileSplit.length - 1]
-        const fileName = randomguy.randNumb('gapura')+'.'+fileExtension
+        const fileName = randomguy.randNumb('gapura-article-'+Date.now())+'.'+fileExtension
 
-        callback(null, fileoriname)
+        callback(null, fileName)
     }
 })
 
