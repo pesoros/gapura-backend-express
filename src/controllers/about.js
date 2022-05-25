@@ -1,7 +1,6 @@
 const About = require('../models/About')
 const fs = require('fs-extra')
 const misc = require('../helper/misc')
-const randomguy = require('../helper/randomguy')
 
 module.exports = {
 
