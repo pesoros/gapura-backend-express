@@ -3,6 +3,7 @@ const article = require('./routes/article')
 const categories = require('./routes/categories')
 const about = require('./routes/about')
 const footer = require('./routes/footer')
+const home = require('./routes/home')
 const Route = express.Router()
 
 Route
@@ -10,5 +11,6 @@ Route
     .use('/api/v1/categories', categories)
     .use('/api/v1/about', about)
     .use('/api/v1/footer', footer)
+    .use('/api/v1/home', home)
 
 module.exports = Route

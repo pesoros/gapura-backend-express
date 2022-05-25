@@ -2,6 +2,7 @@ const Article = require('../models/Article')
 const fs = require('fs-extra')
 const misc = require('../helper/misc')
 const randomguy = require('../helper/randomguy')
+var slugify = require('slugify')
 
 module.exports = {
 
@@ -118,6 +119,7 @@ module.exports = {
 
         const categories_id = request.body.categories_id
         const title = request.body.title
+        const slug = slugify(title, {lower: true})+'-'+randomguy.randNumb('atcl')
         const label = request.body.label
         const sublabel = request.body.sublabel
         const description = request.body.description
@@ -126,9 +128,10 @@ module.exports = {
 
         try {
             if(error === false) {
-                const response_addArticle = await Article.addArticle(categories_id, title, label, sublabel, description, image, timestamp)
+                const response_addArticle = await Article.addArticle(categories_id, title, label, sublabel, description, image, slug, timestamp)
                 const data = {
                     categories_id,
+                    slug,
                     title,
                     label,
                     sublabel,

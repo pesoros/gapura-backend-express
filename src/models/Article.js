@@ -42,15 +42,15 @@ module.exports = {
             })
         })
     },
-    addArticle: (categories_id, title, label, sublabel, description, image, timestamp) => {
+    addArticle: (categories_id, title, label, sublabel, description, image, slug, timestamp) => {
         return new Promise((resolve, reject) => {
             let quertext = ''
             if (image === '-') {
-                quertext = `categories_id, title, label, sublabel, description`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}'`
+                quertext = `categories_id, title, label, sublabel, description, slug`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}'`
             } else {
-                quertext = `categories_id, title, label, sublabel, description, image`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${image}'`
+                quertext = `categories_id, title, label, sublabel, description, slug, image`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${image}'`
             }
             const query = `INSERT INTO articles (${quertext}) VALUES (${valtext})`
             connection.query(query, (error, result) => {
