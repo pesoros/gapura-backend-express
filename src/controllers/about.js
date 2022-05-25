@@ -82,7 +82,7 @@ module.exports = {
                 const fileExtension = fileSplit[fileSplit.length - 1]
                 fileName = request.file.originalname
 
-                if(request.files.size >= 5242880) {
+                if(request.file.size >= 5242880) {
                     const message = 'Oops!, Size cannot more than 5MB'
                      response.json(message)
                      error = true
