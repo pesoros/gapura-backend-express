@@ -26,15 +26,15 @@ module.exports = {
             })
         })
     },
-    updateFooter: (copyright, address, phone, dinas, timestamp) => {
+    updateHome: (position, title, subtitle, image, timestamp) => {
         return new Promise((resolve, reject) => {
             let query = ''
 
             query =  `UPDATE settingHome SET
-            copyright = '${copyright}',
-            address = '${address}',
-            phone = '${phone}',
-            dinas = '${dinas}'`
+            title = '${title}',
+            subtitle = '${subtitle}',
+            image = '${image}'
+            WHERE position = '${position}'`
 
             connection.query(query, (error, result) => {
                 if(error) {

@@ -45,22 +45,62 @@ module.exports = {
     updateHome: async (request, response) => {
 
         let error = false
+        let fileName = ''
 
-        const copyright = request.body.copyright
-        const address = request.body.address
-        const phone = request.body.phone
-        const dinas = request.body.dinas
+        if(request) {
+            if(request.file) {
+                const file = request.file.originalname
+                const fileSplit = file.split('.')
+                const fileExtension = fileSplit[fileSplit.length - 1]
+                fileName = request.file.originalname
+
+                if(request.file.size >= 5242880) {
+                    const message = 'Oops!, Size cannot more than 5MB'
+                     response.json(message)
+                     error = true
+                    fs.unlink(`public/images/home/${request.file.originalname}`, function(error) {
+                        if (error) response.json(error)
+                    })
+                }
+
+                if(!isImage(fileExtension)) {
+                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                    response.json(message)
+                    error = true
+                    fs.unlink(`public/images/home/${request.file.originalname}`, function(error) {
+                        if (error) response.json(error)
+                    })
+                }
+
+                function isImage(fileExtension) {
+                    switch (fileExtension) {
+                        case 'jpg':
+                        case 'jpeg':
+                        case 'png':
+                        case 'gif':
+                        case 'svg':
+                            return true
+                        }
+                        return false
+                }
+            }
+        }
+
+        const position = request.body.position
+        const title = request.body.title
+        const subtitle = request.body.subtitle
+        const image = fileName
         const timestamp = request.timestamp
 
         try {
             if(error === false) {
-                await Home.updateHome(copyright, address, phone, dinas, timestamp) 
+                await Home.updateHome(position, title, subtitle, image, timestamp) 
 
                 const data = {
-                    copyright,
-                    address,
-                    phone,
-                    dinas 
+                    position,
+                    title,
+                    subtitle,
+                    image 
                 }
                 misc.response(response, 200, false, 'Successfull update Home', data)
             }
