@@ -73,6 +73,30 @@ module.exports = {
 
     },
 
+    getSingleArticleSlug: async (request, response) => {
+
+        const slug = request.params.slug
+
+        try {
+            const data = await Article.getSingleArticleSlug(slug)
+            if (!data) {
+                return misc.response(response, 400, false, 'Data not found')
+            }
+            if (data.image == null) {
+                data.imagelink = null
+            } else {
+                data.imagelink = request.get('host')+ '/images/articles/' + data.image
+            }
+            
+            misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)
+
+        } catch(error) {
+            console.error(error)
+            misc.response(response, 500, true, 'Server error')
+        }
+
+    },
+
     addArticle: async (request, response) => {
 
         let error = false
@@ -119,7 +143,7 @@ module.exports = {
 
         const categories_id = request.body.categories_id
         const title = request.body.title
-        const slug = slugify(title, {lower: true})+'-'+randomguy.randNumb('atcl')
+        const slug = slugify(title, {lower: true})+'-'+randomguy.randNumb('gapura')
         const label = request.body.label
         const sublabel = request.body.sublabel
         const description = request.body.description

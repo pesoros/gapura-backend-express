@@ -25,6 +25,7 @@ const upload = multer({
 
 Route.get('/', Article.getAll)
     .get('/show/:article_id', Article.getSingleArticle)
+    .get('/slug/:slug', Article.getSingleArticleSlug)
     .post('/add',upload.single('image'), Article.addArticle)
     .patch('/update', upload.single('image'), Article.updateArticle)
     .delete('/delete/:article_id', Article.deleteArticle)

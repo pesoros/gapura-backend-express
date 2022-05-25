@@ -77,8 +77,8 @@ module.exports = {
         let fileName = '-'
         let fileNameBackground = '-'
 
-        if(request) {
-            if(request.files.image[0]) {
+        if(Object.keys(request.files).length !== 0) {
+            if(request.files.image) {
                 const file = request.files.image[0].originalname
                 const fileSplit = file.split('.')
                 const fileExtension = fileSplit[fileSplit.length - 1]
@@ -115,7 +115,7 @@ module.exports = {
                 }
             }
 
-            if(request.files.background[0]) {
+            if(request.files.background) {
                 const file = request.files.background[0].originalname
                 const fileSplit = file.split('.')
                 const fileExtension = fileSplit[fileSplit.length - 1]
@@ -184,7 +184,7 @@ module.exports = {
         let fileName = '-'
         let fileNameBackground = '-'
 
-        if(request) {
+        if(Object.keys(request.files).length !== 0) {
             if(request.files.image) {
                 const file = request.files.image[0].originalname
                 const fileSplit = file.split('.')

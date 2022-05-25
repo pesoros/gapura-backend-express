@@ -42,6 +42,18 @@ module.exports = {
             })
         })
     },
+    getSingleArticleSlug: (slug) => {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT a.*, b.title as categories FROM articles a INNER JOIN categories b ON b.id = a.categories_id WHERE a.slug = '${slug}'`
+            connection.query(query, (error, result) => {
+                if(error) {
+                    reject(new Error(error))
+                } else {
+                    resolve(result[0])
+                }
+            })
+        })
+    },
     addArticle: (categories_id, title, label, sublabel, description, image, slug, timestamp) => {
         return new Promise((resolve, reject) => {
             let quertext = ''
