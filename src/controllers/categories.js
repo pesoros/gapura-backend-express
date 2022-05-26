@@ -15,9 +15,6 @@ module.exports = {
             const sortBy = request.query.sortBy || 'createdAt'
             const offset = (page - 1) * limit
         try {
-            const total = await Categories.getCategoriesCount()
-            const prevPage = page === 1 ? 1 : page - 1
-            const nextPage = page === total[0].total ? total[0].total : page + 1
             const data = await Categories.getAll(offset, limit, sort, sortBy, search)
 
             if (data.length == 0) {
@@ -32,15 +29,7 @@ module.exports = {
                 }
             });
 
-            let pageDetail = {
-                total: Math.ceil(total[0].total),
-                per_page: limit,
-                current_page: page,
-                nextLink: `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}`,
-                prevLink: `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + prevPage)}`
-            }
-
-            misc.responsePagination(response, 200, false, 'Successfull get all data', pageDetail, data, request.originalUrl)
+            misc.responsePagination(response, 200, false, 'Successfull get all data', [], data, request.originalUrl)
         } catch (error) {
             console.error(error)
             misc.response(response, 500, true, 'Server error')
