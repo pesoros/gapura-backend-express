@@ -2,6 +2,7 @@ const Home = require('../models/Home')
 const fs = require('fs-extra')
 const misc = require('../helper/misc')
 const randomguy = require('../helper/randomguy')
+const fileChecker = require('../helper/fileChecker')
 
 module.exports = {
 
