@@ -32,7 +32,7 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.get('host')+ '/images/home/' + data.image
+                data.imagelink = request.get('host')+ '/piblic/images/home/' + data.image
             }
             
             misc.response(response, 200, false, 'Successfull get single Home', data, request.originalUrl)

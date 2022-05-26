@@ -14,34 +14,12 @@ module.exports = {
             })
         })
     },
-    getSingle: (position) => {
-        return new Promise((resolve, reject) => {
-            const query = `SELECT * FROM settingHome WHERE position = '${position}'`
-            connection.query(query, (error, result) => {
-                if(error) {
-                    reject(new Error(error))
-                } else {
-                    resolve(result[0])
-                }
-            })
-        })
-    },
-    updateHome: (position, title, subtitle, image, timestamp) => {
+    updateHome: (content) => {
         return new Promise((resolve, reject) => {
             let query = ''
 
-            if (image === '-') { 
                 query =  `UPDATE settingHome SET
-                title = '${title}',
-                subtitle = '${subtitle}'
-                WHERE position = '${position}'`
-            } else {
-                query =  `UPDATE settingHome SET
-                title = '${title}',
-                subtitle = '${subtitle}',
-                image = '${image}'
-                WHERE position = '${position}'`
-            }
+                content = '${content}'`
 
             connection.query(query, (error, result) => {
                 if(error) {

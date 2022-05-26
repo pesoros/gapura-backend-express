@@ -30,12 +30,12 @@ module.exports = {
                 if (element.image == null) {
                     element.imagelink = null
                 } else {
-                    element.imagelink = request.get('host')+ '/images/assets/' + element.image
+                    element.imagelink = request.get('host')+ '/piblic/images/assets/' + element.image
                 }
                 if (element.file == null) {
                     element.filelink = null
                 } else {
-                    element.filelink = request.get('host')+ '/images/assets/' + element.image
+                    element.filelink = request.get('host')+ '/piblic/images/assets/' + element.image
                 }
             });
 
@@ -67,13 +67,13 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.get('host')+ '/images/assets/' + data.image
+                data.imagelink = request.get('host')+ '/piblic/images/assets/' + data.image
             }
 
-            if (element.file == null) {
-                element.filelink = null
+            if (data.file == null) {
+                data.filelink = null
             } else {
-                element.filelink = request.get('host')+ '/images/assets/' + element.image
+                data.filelink = request.get('host')+ '/piblic/images/assets/' + data.image
             }
             
             misc.response(response, 200, false, 'Successfull get single Assets', data, request.originalUrl)
