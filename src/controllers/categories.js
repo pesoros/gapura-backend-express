@@ -25,12 +25,12 @@ module.exports = {
                 if (element.image == null) {
                     element.imagelink = null
                 } else {
-                    element.imagelink = request.get('host')+ '/piblic/images/categories/' + element.image
+                    element.imagelink = request.get('host')+ '/images/categories/' + element.image
                 }
                 if (element.background == null) {
                     element.backgroundlink = null
                 } else {
-                    element.backgroundlink = request.get('host')+ '/piblic/images/articles/' + element.image
+                    element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
                 }
             });
 
@@ -54,12 +54,12 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.get('host')+ '/piblic/images/categories/' + data.image
+                data.imagelink = request.get('host')+ '/images/categories/' + data.image
             }
             if (data.background == null) {
                 data.backgroundlink = null
             } else {
-                data.backgroundlink = request.get('host')+ '/piblic/images/articles/' + data.image
+                data.backgroundlink = request.get('host')+ '/images/articles/' + data.image
             }
             
             misc.response(response, 200, false, 'Successfull get single Categories', data, request.originalUrl)
