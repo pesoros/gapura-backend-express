@@ -1,4 +1,4 @@
-const Article = require('../models/Article')
+const Assets = require('../models/Assets')
 const fs = require('fs-extra')
 const misc = require('../helper/misc')
 const randomguy = require('../helper/randomguy')
@@ -17,10 +17,10 @@ module.exports = {
             const sortBy = request.query.sortBy || 'createdAt'
             const offset = (page - 1) * limit
         try {
-            const total = await Article.getArticleCount()
+            const total = await Assets.getAssetsCount()
             const prevPage = page === 1 ? 1 : page - 1
             const nextPage = page === total[0].total ? total[0].total : page + 1
-            const data = await Article.getAll(offset, limit, sort, sortBy, search, category)
+            const data = await Assets.getAll(offset, limit, sort, sortBy, search, category)
 
             if (data.length == 0) {
                 return misc.response(response, 400, false, 'Data not found')
@@ -30,12 +30,7 @@ module.exports = {
                 if (element.image == null) {
                     element.imagelink = null
                 } else {
-                    element.imagelink = request.get('host')+ '/images/articles/' + element.image
-                }
-                if (element.background == null) {
-                    element.backgroundlink = null
-                } else {
-                    element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
+                    element.imagelink = request.get('host')+ '/images/assets/' + element.image
                 }
             });
 
@@ -55,28 +50,22 @@ module.exports = {
 
     },
 
-    getSingleArticle: async (request, response) => {
+    getSingleAssets: async (request, response) => {
 
-        const article_id = request.params.article_id
+        const assets_id = request.params.assets_id
 
         try {
-            const data = await Article.getSingleArticle(article_id)
+            const data = await Assets.getSingleAssets(assets_id)
             if (!data) {
                 return misc.response(response, 400, false, 'Data not found')
             }
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.get('host')+ '/images/articles/' + data.image
+                data.imagelink = request.get('host')+ '/images/assets/' + data.image
             }
             
-            if (element.background == null) {
-                element.backgroundlink = null
-            } else {
-                element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
-            }
-
-            misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)
+            misc.response(response, 200, false, 'Successfull get single Assets', data, request.originalUrl)
 
         } catch(error) {
             console.error(error)
@@ -85,39 +74,16 @@ module.exports = {
 
     },
 
-    getSingleArticleSlug: async (request, response) => {
-
-        const slug = request.params.slug
-
-        try {
-            const data = await Article.getSingleArticleSlug(slug)
-            if (!data) {
-                return misc.response(response, 400, false, 'Data not found')
-            }
-            if (data.image == null) {
-                data.imagelink = null
-            } else {
-                data.imagelink = request.get('host')+ '/images/articles/' + data.image
-            }
-            
-            misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)
-
-        } catch(error) {
-            console.error(error)
-            misc.response(response, 500, true, 'Server error')
-        }
-
-    },
-
-    addArticle: async (request, response) => {
+    addAssets: async (request, response) => {
 
         let error = false
         let fileName = '-'
+        let fileNameDocument = '-'
 
         if(request.body.image) {
             var binImage = request.body.image;
             const [,fileExtension] = binImage.split(';')[0].split('/');
-            fileName = randomguy.randNumb('gapura-articles-'+Date.now())+'.'+fileExtension
+            fileName = randomguy.randNumb('gapura-assets-'+Date.now())+'.'+fileExtension
             binImage = binImage.split("base64,")[1];
 
             if (!fileChecker.isImage(fileExtension)) {
@@ -128,34 +94,46 @@ module.exports = {
             }
 
             const fileContents = new Buffer(binImage, 'base64')
-                fs.writeFile(`public/images/articles/${fileName}`, fileContents, (err) => {
+                fs.writeFile(`public/images/assets/${fileName}`, fileContents, (err) => {
                 if (err) return console.error(err)
-                console.log('file saved to ', `public/images/articles/${fileName}`)
+                console.log('file saved to ', `public/images/assets/${fileName}`)
             })
         }
 
-        const categories_id = request.body.categories_id
+        if(request.body.document) {
+            var binImage = request.body.document;
+            const [,fileExtension] = binImage.split(';')[0].split('/');
+            fileNameDocument = randomguy.randNumb('gapura-assets-file-'+Date.now())+'.'+fileExtension
+            binImage = binImage.split("base64,")[1];
+
+            if (!fileChecker.isDocument(fileExtension)) {
+                const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                response.json(message)
+                error = true
+                return
+            }
+
+            const fileContents = new Buffer(binImage, 'base64')
+                fs.writeFile(`public/images/assets/${fileName}`, fileContents, (err) => {
+                if (err) return console.error(err)
+                console.log('file saved to ', `public/images/assets/${fileName}`)
+            })
+        }
+
         const title = request.body.title
-        const slug = slugify(title, {lower: true})+'-'+randomguy.randNumb('gapura')
-        const label = request.body.label
-        const sublabel = request.body.sublabel
-        const description = request.body.description
         const image = fileName
+        const file = fileNameDocument
         const timestamp = request.timestamp
 
         try {
             if(error === false) {
-                const response_addArticle = await Article.addArticle(categories_id, title, label, sublabel, description, image, slug, timestamp)
+                const response_addAssets = await Assets.addAssets(title, image, file, timestamp)
                 const data = {
-                    categories_id,
-                    slug,
                     title,
-                    label,
-                    sublabel,
-                    description,
-                    image
+                    image,
+                    file
                 }
-                misc.response(response, 200, false, 'Successfull create Article', data)
+                misc.response(response, 200, false, 'Successfull create Assets', data)
             }
         } catch(error) {
             console.error(error)
@@ -163,15 +141,16 @@ module.exports = {
         }
 
     },
-    updateArticle: async (request, response) => {
+    updateAssets: async (request, response) => {
 
         let error = false
         let fileName = '-'
+        let fileNameDocument = '-'
 
         if(request.body.image) {
             var binImage = request.body.image;
             const [,fileExtension] = binImage.split(';')[0].split('/');
-            fileName = randomguy.randNumb('gapura-articles-'+Date.now())+'.'+fileExtension
+            fileName = randomguy.randNumb('gapura-assets-'+Date.now())+'.'+fileExtension
             binImage = binImage.split("base64,")[1];
 
             if (!fileChecker.isImage(fileExtension)) {
@@ -182,36 +161,49 @@ module.exports = {
             }
 
             const fileContents = new Buffer(binImage, 'base64')
-                fs.writeFile(`public/images/articles/${fileName}`, fileContents, (err) => {
+                fs.writeFile(`public/images/assets/${fileName}`, fileContents, (err) => {
                 if (err) return console.error(err)
-                console.log('file saved to ', `public/images/articles/${fileName}`)
+                console.log('file saved to ', `public/images/assets/${fileName}`)
             })
         }
 
-        const article_id = request.body.article_id
+        if(request.body.document) {
+            var binImage = request.body.document;
+            const [,fileExtension] = binImage.split(';')[0].split('/');
+            fileNameDocument = randomguy.randNumb('gapura-assets-file-'+Date.now())+'.'+fileExtension
+            binImage = binImage.split("base64,")[1];
 
-        const categories_id = request.body.categories_id
+            if (!fileChecker.isDocument(fileExtension)) {
+                const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                response.json(message)
+                error = true
+                return
+            }
+
+            const fileContents = new Buffer(binImage, 'base64')
+                fs.writeFile(`public/images/assets/${fileName}`, fileContents, (err) => {
+                if (err) return console.error(err)
+                console.log('file saved to ', `public/images/assets/${fileName}`)
+            })
+        }
+
+        const assets_id = request.body.assets_id
+
         const title = request.body.title
-        const label = request.body.label
-        const sublabel = request.body.sublabel
-        const description = request.body.description
         const image = fileName
+        const file = fileNameDocument
         const timestamp = request.timestamp
 
         try {
             if(error === false) {
-                await Article.updateArticle(article_id, categories_id, title, label, sublabel, description, image, timestamp)
+                await Assets.updateAssets(assets_id, title, image, file, timestamp)
 
                 const data = {
-                    article_id,
-                    categories_id,
                     title,
-                    label,
-                    sublabel,
-                    description,
-                    image
+                    image,
+                    file
                 }
-                misc.response(response, 200, false, 'Successfull update article', data)
+                misc.response(response, 200, false, 'Successfull update Assets', data)
             }
         } catch(error) {
             console.error(error)
@@ -219,13 +211,13 @@ module.exports = {
         }
 
     },
-    deleteArticle: async (request, response) => {
+    deleteAssets: async (request, response) => {
 
-        const article_id = request.params.article_id
+        const assets_id = request.params.assets_id
 
         try {
-            await Article.deleteArticle(article_id)
-            misc.response(response, 200, false, 'Successfull delete Article')
+            await Assets.deleteAssets(assets_id)
+            misc.response(response, 200, false, 'Successfull delete Assets')
         } catch(error) {
             console.error(error)
             misc.response(response, 500, true, 'Server error')
