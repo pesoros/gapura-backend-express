@@ -132,7 +132,7 @@ module.exports = {
         }
 
         const title = request.body.title
-        const attention = request.body.attention || null
+        const attention = request.body.attention || '-'
         const image = fileName
         const file = fileNameDocument
         const timestamp = request.timestamp
@@ -203,7 +203,7 @@ module.exports = {
         const assets_id = request.body.assets_id
 
         const title = request.body.title
-        const attention = request.body.attention || null
+        const attention = request.body.attention || '-'
         const image = fileName
         const file = fileNameDocument
         const timestamp = request.timestamp
