@@ -13,8 +13,13 @@ app.use(express.static('public'))
 app.use(cors())
 
 app.use(logger('dev'))
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+    parameterLimit: 100000,
+    limit: '50mb',
+    extended: true
+  }));
 app.use(bodyParser.json())
+
 app.use(timest.init)
 app.use('/', routerNav)
 
