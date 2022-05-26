@@ -32,6 +32,11 @@ module.exports = {
                 } else {
                     element.imagelink = request.get('host')+ '/images/assets/' + element.image
                 }
+                if (element.file == null) {
+                    element.filelink = null
+                } else {
+                    element.filelink = request.get('host')+ '/images/assets/' + element.image
+                }
             });
 
             let pageDetail = {
@@ -63,6 +68,12 @@ module.exports = {
                 data.imagelink = null
             } else {
                 data.imagelink = request.get('host')+ '/images/assets/' + data.image
+            }
+
+            if (element.file == null) {
+                element.filelink = null
+            } else {
+                element.filelink = request.get('host')+ '/images/assets/' + element.image
             }
             
             misc.response(response, 200, false, 'Successfull get single Assets', data, request.originalUrl)
