@@ -56,10 +56,10 @@ module.exports = {
             } else {
                 data.imagelink = request.get('host')+ '/images/categories/' + data.image
             }
-            if (element.background == null) {
-                element.backgroundlink = null
+            if (data.background == null) {
+                data.backgroundlink = null
             } else {
-                element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
+                data.backgroundlink = request.get('host')+ '/images/articles/' + element.image
             }
             
             misc.response(response, 200, false, 'Successfull get single Categories', data, request.originalUrl)
