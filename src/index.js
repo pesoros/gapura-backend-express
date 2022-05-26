@@ -6,6 +6,7 @@ const footer = require('./routes/footer')
 const home = require('./routes/home')
 const user = require('./routes/user')
 const assets = require('./routes/assets')
+const attention = require('./routes/attention')
 const auth = require('./routes/auth')
 const Route = express.Router()
 
@@ -17,6 +18,7 @@ Route
     .use('/api/v1/home', home)
     .use('/api/v1/user', user)
     .use('/api/v1/assets', assets)
+    .use('/api/v1/attention', attention)
     .use('/api/v1/auth', auth)
 
 module.exports = Route

@@ -40,26 +40,26 @@ module.exports = {
             })
         })
     },
-    addAssets: (title, image, file, timestamp)=> {
+    addAssets: (title, attention, image, file, timestamp)=> {
         return new Promise((resolve, reject) => {
             let quertext = ''
 
             if (image === '-' && file === '-' ) {
-                quertext = `title`
-                valtext = `'${title}'`
+                quertext = `title, attention`
+                valtext = `'${title}', '${attention}'`
             } else {
                 if (image === '-') {
                     if (file !== '-') {
-                        quertext = `title, file`
-                        valtext = `'${title}', '${file}'`
+                        quertext = `title, attention, file`
+                        valtext = `'${title}', '${attention}', '${file}'`
                     } 
                 } else {
                     if (file === '-') {
-                        quertext = `title, image`
-                        valtext = `'${title}', '${image}'`
+                        quertext = `title, attention, image`
+                        valtext = `'${title}', '${attention}', '${image}'`
                     } else {
-                        quertext = `title, image, file`
-                        valtext = `'${title}', '${image}', '${file}'`
+                        quertext = `title, attention, image, file`
+                        valtext = `'${title}', '${attention}', '${image}', '${file}'`
                     }
                 }
             }
@@ -75,19 +75,21 @@ module.exports = {
             })
         })
     },
-    updateAssets: (assets_id, title, image, file, timestamp)=> {
+    updateAssets: (assets_id, title, attention, image, file, timestamp)=> {
         return new Promise((resolve, reject) => {
             let query = ''
 
             if (image === '-' && file === '-' ) {
                 query =  `UPDATE assets SET
-                title = '${title}'
+                title = '${title}',
+                attention = '${attention}'
                 WHERE id = '${assets_id}'`
             } else {
                 if (image === '-') {
                     if (file !== '-') {
                         query =  `UPDATE assets SET
                         title = '${title}',
+                        attention = '${attention}',
                         file = '${file}'
                         WHERE id = '${assets_id}'`
                     } 
@@ -95,11 +97,13 @@ module.exports = {
                     if (file === '-') {
                         query =  `UPDATE assets SET
                         title = '${title}',
+                        attention = '${attention}',
                         image = '${image}'
                         WHERE id = '${assets_id}'`
                     } else {
                         query =  `UPDATE assets SET
                         title = '${title}',
+                        attention = '${attention}',
                         image = '${image}',
                         file = '${file}'
                         WHERE id = '${assets_id}'`

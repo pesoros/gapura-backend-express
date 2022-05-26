@@ -132,15 +132,17 @@ module.exports = {
         }
 
         const title = request.body.title
+        const attention = request.body.attention
         const image = fileName
         const file = fileNameDocument
         const timestamp = request.timestamp
 
         try {
             if(error === false) {
-                const response_addAssets = await Assets.addAssets(title, image, file, timestamp)
+                const response_addAssets = await Assets.addAssets(title, attention, image, file, timestamp)
                 const data = {
                     title,
+                    attention,
                     image,
                     file
                 }
@@ -201,16 +203,18 @@ module.exports = {
         const assets_id = request.body.assets_id
 
         const title = request.body.title
+        const attention = request.body.attention
         const image = fileName
         const file = fileNameDocument
         const timestamp = request.timestamp
 
         try {
             if(error === false) {
-                await Assets.updateAssets(assets_id, title, image, file, timestamp)
+                await Assets.updateAssets(assets_id, title, attention, image, file, timestamp)
 
                 const data = {
                     title,
+                    attention,
                     image,
                     file
                 }

@@ -26,7 +26,7 @@ module.exports = {
 
         try {
             if(error === false) {
-                await Attention.updateAttention(content, timestamp) 
+                await Attention.updateAttention(content) 
 
                 const data = {
                     content,
