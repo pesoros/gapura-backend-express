@@ -1,5 +1,5 @@
 const express = require('express')
-const Assets = require('../controllers/Assets')
+const Assets = require('../controllers/assets')
 const jwtCheck = require('../helper/jwt')
 const Route = express.Router()
 
