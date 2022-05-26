@@ -5,6 +5,19 @@ const jwt = require('jsonwebtoken')
 const expir = '1h'
 
 module.exports = {
+
+    checkToken: async (request, response, next) => {
+        try {
+            const token = request.body.token
+            const decodeToken = jwt.verify(token, process.env.JWT_KEY)
+            if (decodeToken) {
+                return misc.response(response, 200, false, 'Token Valid')
+            }
+        } catch (err) {
+            console.log(err);
+            return misc.response(response, 501, true, 'Invalid Token')
+        }
+    },
     
     login: async (request, response) => {
 
