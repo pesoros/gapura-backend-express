@@ -30,7 +30,7 @@ module.exports = {
                 if (element.background == null) {
                     element.backgroundlink = null
                 } else {
-                    element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
+                    element.backgroundlink = request.get('host')+ '/images/articles/' + element.image.background
                 }
             });
 
@@ -59,7 +59,7 @@ module.exports = {
             if (data.background == null) {
                 data.backgroundlink = null
             } else {
-                data.backgroundlink = request.get('host')+ '/images/articles/' + data.image
+                data.backgroundlink = request.get('host')+ '/images/articles/' + data.background
             }
             
             misc.response(response, 200, false, 'Successfull get single Categories', data, request.originalUrl)

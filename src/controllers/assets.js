@@ -35,7 +35,7 @@ module.exports = {
                 if (element.file == null) {
                     element.filelink = null
                 } else {
-                    element.filelink = request.get('host')+ '/images/assets/' + element.image
+                    element.filelink = request.get('host')+ '/images/assets/' + element.file
                 }
             });
 
@@ -73,7 +73,7 @@ module.exports = {
             if (data.file == null) {
                 data.filelink = null
             } else {
-                data.filelink = request.get('host')+ '/images/assets/' + data.image
+                data.filelink = request.get('host')+ '/images/assets/' + data.file
             }
             
             misc.response(response, 200, false, 'Successfull get single Assets', data, request.originalUrl)
