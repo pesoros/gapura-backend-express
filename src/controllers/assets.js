@@ -40,7 +40,7 @@ module.exports = {
             });
 
             let pageDetail = {
-                total: Math.ceil(total[0].total),
+                total: Math.ceil(total[0].total), 
                 per_page: limit,
                 current_page: page,
                 nextLink: `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}`,
