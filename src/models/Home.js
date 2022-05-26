@@ -30,11 +30,18 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let query = ''
 
-            query =  `UPDATE settingHome SET
-            title = '${title}',
-            subtitle = '${subtitle}',
-            image = '${image}'
-            WHERE position = '${position}'`
+            if (image === '-') { 
+                query =  `UPDATE settingHome SET
+                title = '${title}',
+                subtitle = '${subtitle}'
+                WHERE position = '${position}'`
+            } else {
+                query =  `UPDATE settingHome SET
+                title = '${title}',
+                subtitle = '${subtitle}',
+                image = '${image}'
+                WHERE position = '${position}'`
+            }
 
             connection.query(query, (error, result) => {
                 if(error) {
