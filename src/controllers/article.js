@@ -11,7 +11,7 @@ module.exports = {
 
             const page = parseInt(request.query.page) || 1
             const search = request.query.search || ''
-            const limit = request.query.limit || 1
+            const limit = request.query.limit || 10
             const sort = request.query.sort || 'DESC'
             const category = request.query.categories_id || 1
             const sortBy = request.query.sortBy || 'createdAt'
