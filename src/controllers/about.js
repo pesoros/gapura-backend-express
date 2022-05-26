@@ -1,6 +1,8 @@
 const About = require('../models/About')
 const fs = require('fs-extra')
 const misc = require('../helper/misc')
+const randomguy = require('../helper/randomguy')
+const fileChecker = require('../helper/fileChecker')
 
 module.exports = {
 
@@ -74,43 +76,24 @@ module.exports = {
         let error = false
         let fileName = '-'
 
-        if(request) {
-            if(request.file) {
-                const file = request.file.filename
-                const fileSplit = file.split('.')
-                const fileExtension = fileSplit[fileSplit.length - 1]
-                fileName = request.file.filename
+        if(request.body.image) {
+            var binImage = request.body.image;
+            const [,fileExtension] = binImage.split(';')[0].split('/');
+            fileName = randomguy.randNumb('gapura-about-'+Date.now())+'.'+fileExtension
+            binImage = binImage.split("base64,")[1];
 
-                if(request.file.size >= 5242880) {
-                    const message = 'Oops!, Size cannot more than 5MB'
-                     response.json(message)
-                     error = true
-                    fs.unlink(`public/images/about/${request.file.filename}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                if(!isImage(fileExtension)) {
-                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
-                    response.json(message)
-                    error = true
-                    fs.unlink(`public/images/about/${request.file.filename}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                function isImage(fileExtension) {
-                    switch (fileExtension) {
-                        case 'jpg':
-                        case 'jpeg':
-                        case 'png':
-                        case 'gif':
-                        case 'svg':
-                            return true
-                        }
-                        return false
-                }
+            if (!fileChecker.isImage(fileExtension)) {
+                const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                response.json(message)
+                error = true
+                return
             }
+
+            const fileContents = new Buffer(binImage, 'base64')
+                fs.writeFile(`public/images/about/${fileName}`, fileContents, (err) => {
+                if (err) return console.error(err)
+                console.log('file saved to ', `public/images/about/${fileName}`)
+            })
         }
 
         const about_id = request.body.about_id

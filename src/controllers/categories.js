@@ -2,6 +2,7 @@ const Categories = require('../models/Categories')
 const fs = require('fs-extra')
 const misc = require('../helper/misc')
 const randomguy = require('../helper/randomguy')
+const fileChecker = require('../helper/fileChecker')
 
 module.exports = {
 
@@ -77,80 +78,44 @@ module.exports = {
         let fileName = '-'
         let fileNameBackground = '-'
 
-        if(Object.keys(request.files).length !== 0) {
-            if(request.files.image) {
-                const file = request.files.image[0].originalname
-                const fileSplit = file.split('.')
-                const fileExtension = fileSplit[fileSplit.length - 1]
-                fileName = request.files.image[0].originalname
+        if(request.body.image) {
+            var binImage = request.body.image;
+            const [,fileExtension] = binImage.split(';')[0].split('/');
+            fileName = randomguy.randNumb('gapura-categories-'+Date.now())+'.'+fileExtension
+            binImage = binImage.split("base64,")[1];
 
-                if(request.files.size >= 5242880) {
-                    const message = 'Oops!, Size cannot more than 5MB'
-                     response.json(message)
-                     error = true
-                    fs.unlink(`public/images/categories/${request.files.image[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                if(!isImage(fileExtension)) {
-                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
-                    response.json(message)
-                    error = true
-                    fs.unlink(`public/images/categories/${request.files.image[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                function isImage(fileExtension) {
-                    switch (fileExtension) {
-                        case 'jpg':
-                        case 'jpeg':
-                        case 'png':
-                        case 'gif':
-                        case 'svg':
-                            return true
-                        }
-                        return false
-                }
+            if (!fileChecker.isImage(fileExtension)) {
+                const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                response.json(message)
+                error = true
+                return
             }
 
-            if(request.files.background) {
-                const file = request.files.background[0].originalname
-                const fileSplit = file.split('.')
-                const fileExtension = fileSplit[fileSplit.length - 1]
-                fileNameBackground = request.files.background[0].originalname
+            const fileContents = new Buffer(binImage, 'base64')
+                fs.writeFile(`public/images/categories/${fileName}`, fileContents, (err) => {
+                if (err) return console.error(err)
+                console.log('file saved to ', `public/images/categories/${fileName}`)
+            })
+        }
 
-                if(request.files.size >= 5242880) {
-                    const message = 'Oops!, Size cannot more than 5MB'
-                     response.json(message)
-                     error = true
-                    fs.unlink(`public/images/categories/${request.files.background[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
+        if(request.body.background) {
+            var binImage = request.body.background;
+            const [,fileExtension] = binImage.split(';')[0].split('/');
+            fileNameBackground = randomguy.randNumb('gapura-categories-bg-'+Date.now())+'.'+fileExtension
+            binImage = binImage.split("base64,")[1];
 
-                if(!isImage(fileExtension)) {
-                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
-                    response.json(message)
-                    error = true
-                    fs.unlink(`public/images/categories/${request.files.background[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                function isImage(fileExtension) {
-                    switch (fileExtension) {
-                        case 'jpg':
-                        case 'jpeg':
-                        case 'png':
-                        case 'gif':
-                        case 'svg':
-                            return true
-                        }
-                        return false
-                }
+            if (!fileChecker.isImage(fileExtension)) {
+                const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                response.json(message)
+                error = true
+                return
             }
+
+            const fileContents = new Buffer(binImage, 'base64')
+                fs.writeFile(`public/images/categories/${fileNameBackground}`, fileContents, (err) => {
+                if (err) return console.error(err)
+                console.log('file saved to ', `public/images/categories/${fileNameBackground}`)
+            })
         }
 
         const title = request.body.title
@@ -184,80 +149,44 @@ module.exports = {
         let fileName = '-'
         let fileNameBackground = '-'
 
-        if(Object.keys(request.files).length !== 0) {
-            if(request.files.image) {
-                const file = request.files.image[0].originalname
-                const fileSplit = file.split('.')
-                const fileExtension = fileSplit[fileSplit.length - 1]
-                fileName = request.files.image[0].originalname
+        if(request.body.image) {
+            var binImage = request.body.image;
+            const [,fileExtension] = binImage.split(';')[0].split('/');
+            fileName = randomguy.randNumb('gapura-categories-'+Date.now())+'.'+fileExtension
+            binImage = binImage.split("base64,")[1];
 
-                if(request.files.size >= 5242880) {
-                    const message = 'Oops!, Size cannot more than 5MB'
-                     response.json(message)
-                     error = true
-                    fs.unlink(`public/images/categories/${request.files.image[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                if(!isImage(fileExtension)) {
-                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
-                    response.json(message)
-                    error = true
-                    fs.unlink(`public/images/categories/${request.files.image[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                function isImage(fileExtension) {
-                    switch (fileExtension) {
-                        case 'jpg':
-                        case 'jpeg':
-                        case 'png':
-                        case 'gif':
-                        case 'svg':
-                            return true
-                        }
-                        return false
-                }
+            if (!fileChecker.isImage(fileExtension)) {
+                const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                response.json(message)
+                error = true
+                return
             }
 
-            if(request.files.background) {
-                const file = request.files.background[0].originalname
-                const fileSplit = file.split('.')
-                const fileExtension = fileSplit[fileSplit.length - 1]
-                fileNameBackground = request.files.background[0].originalname
+            const fileContents = new Buffer(binImage, 'base64')
+                fs.writeFile(`public/images/categories/${fileName}`, fileContents, (err) => {
+                if (err) return console.error(err)
+                console.log('file saved to ', `public/images/categories/${fileName}`)
+            })
+        }
 
-                if(request.files.size >= 5242880) {
-                    const message = 'Oops!, Size cannot more than 5MB'
-                     response.json(message)
-                     error = true
-                    fs.unlink(`public/images/categories/${request.files.background[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
+        if(request.body.background) {
+            var binImage = request.body.background;
+            const [,fileExtension] = binImage.split(';')[0].split('/');
+            fileNameBackground = randomguy.randNumb('gapura-categories-bg-'+Date.now())+'.'+fileExtension
+            binImage = binImage.split("base64,")[1];
 
-                if(!isImage(fileExtension)) {
-                    const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
-                    response.json(message)
-                    error = true
-                    fs.unlink(`public/images/categories/${request.files.background[0].originalname}`, function(error) {
-                        if (error) response.json(error)
-                    })
-                }
-
-                function isImage(fileExtension) {
-                    switch (fileExtension) {
-                        case 'jpg':
-                        case 'jpeg':
-                        case 'png':
-                        case 'gif':
-                        case 'svg':
-                            return true
-                        }
-                        return false
-                }
+            if (!fileChecker.isImage(fileExtension)) {
+                const message = 'Oops!, File allowed only JPG, JPEG, PNG, GIF, SVG'
+                response.json(message)
+                error = true
+                return
             }
+
+            const fileContents = new Buffer(binImage, 'base64')
+                fs.writeFile(`public/images/categories/${fileNameBackground}`, fileContents, (err) => {
+                if (err) return console.error(err)
+                console.log('file saved to ', `public/images/categories/${fileNameBackground}`)
+            })
         }
 
         const categories_id = request.body.categories_id
