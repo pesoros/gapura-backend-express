@@ -32,11 +32,6 @@ module.exports = {
                 } else {
                     element.imagelink = request.get('host')+ '/images/articles/' + element.image
                 }
-                if (element.background == null) {
-                    element.backgroundlink = null
-                } else {
-                    element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
-                }
             });
 
             let pageDetail = {
@@ -68,12 +63,6 @@ module.exports = {
                 data.imagelink = null
             } else {
                 data.imagelink = request.get('host')+ '/images/articles/' + data.image
-            }
-            
-            if (element.background == null) {
-                element.backgroundlink = null
-            } else {
-                element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
             }
 
             misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)

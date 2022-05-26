@@ -27,6 +27,11 @@ module.exports = {
                 } else {
                     element.imagelink = request.get('host')+ '/images/categories/' + element.image
                 }
+                if (element.background == null) {
+                    element.backgroundlink = null
+                } else {
+                    element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
+                }
             });
 
             misc.responsePagination(response, 200, false, 'Successfull get all data', [], data, request.originalUrl)
@@ -50,6 +55,11 @@ module.exports = {
                 data.imagelink = null
             } else {
                 data.imagelink = request.get('host')+ '/images/categories/' + data.image
+            }
+            if (element.background == null) {
+                element.backgroundlink = null
+            } else {
+                element.backgroundlink = request.get('host')+ '/images/articles/' + element.image
             }
             
             misc.response(response, 200, false, 'Successfull get single Categories', data, request.originalUrl)
