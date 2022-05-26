@@ -46,7 +46,7 @@ module.exports = {
     updateHome: async (request, response) => {
 
         let error = false
-        let fileName = ''
+        let fileName = '-'
 
         if(request.body.image) {
             var binImage = request.body.image;
