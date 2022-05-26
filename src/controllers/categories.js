@@ -10,7 +10,7 @@ module.exports = {
 
             const page = parseInt(request.query.page) || 1
             const search = request.query.search || ''
-            const limit = request.query.limit || 10
+            const limit = request.query.limit || 1000
             const sort = request.query.sort || 'DESC'
             const sortBy = request.query.sortBy || 'createdAt'
             const offset = (page - 1) * limit
