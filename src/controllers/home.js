@@ -43,7 +43,7 @@ module.exports = {
                 for (let key = 0; key < categoriesList.length; key++) {
                     const element = categoriesList[key];
                     arrpush = await Home.getArticlesTerbaru(element.id)
-                    if (arrpush) {
+                    if (arrpush.length !== 0) {
                         articleList.push(arrpush[0])
                     }
                 }
