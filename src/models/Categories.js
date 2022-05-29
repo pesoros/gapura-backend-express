@@ -45,20 +45,20 @@ module.exports = {
             let quertext = ''
             if (image === '-' && background === '-' ) {
                 quertext = `title, subtitle, description, createdAt`
-                valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}`
+                valtext = `'${title}', '${subtitle}', '${description}', '${timestamp}'`
             } else {
                 if (image === '-') {
                     if (background !== '-') {
                         quertext = `title, subtitle, description, createdAt, background`
-                        valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}, '${background}'`
+                        valtext = `'${title}', '${subtitle}', '${description}', '${timestamp}', '${background}'`
                     } 
                 } else {
                     if (background === '-') {
                         quertext = `title, subtitle, description, createdAt, image`
-                        valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}, '${image}'`
+                        valtext = `'${title}', '${subtitle}', '${description}', '${timestamp}', '${image}'`
                     } else {
                         quertext = `title, subtitle, description, createdAt, image, background`
-                        valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}, '${image}', '${background}'`
+                        valtext = `'${title}', '${subtitle}', '${description}', '${timestamp}', '${image}', '${background}'`
                     }
                 }
             }

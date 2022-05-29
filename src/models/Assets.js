@@ -51,15 +51,15 @@ module.exports = {
                 if (image === '-') {
                     if (file !== '-') {
                         quertext = `title, attention, createdAt, file`
-                        valtext = `'${title}', '${attention}', ${timestamp}, '${file}'`
+                        valtext = `'${title}', '${attention}', '${timestamp}', '${file}'`
                     } 
                 } else {
                     if (file === '-') {
                         quertext = `title, attention, createdAt, image`
-                        valtext = `'${title}', '${attention}', ${timestamp}, '${image}'`
+                        valtext = `'${title}', '${attention}', '${timestamp}', '${image}'`
                     } else {
                         quertext = `title, attention, createdAt, image, file`
-                        valtext = `'${title}', '${attention}', ${timestamp}, '${image}', '${file}'`
+                        valtext = `'${title}', '${attention}', '${timestamp}', '${image}', '${file}'`
                     }
                 }
             }

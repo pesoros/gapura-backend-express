@@ -59,10 +59,10 @@ module.exports = {
             let quertext = ''
             if (image === '-') {
                 quertext = `categories_id, title, label, sublabel, description, slug, createdAt`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', ${timestamp}`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${timestamp}'`
             } else {
                 quertext = `categories_id, title, label, sublabel, description, slug, createdAt, image`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', ${timestamp}, '${image}'`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${timestamp}', '${image}'`
             }
             const query = `INSERT INTO articles (${quertext}) VALUES (${valtext})`
             connection.query(query, (error, result) => {
