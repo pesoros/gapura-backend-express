@@ -5,7 +5,7 @@ const randomguy = require('../helper/randomguy')
 const Route = express.Router()
 
 Route.get('/', Footer.getAll)
-    .patch('/', Footer.updateFooter)
+    .patch('/', jwtCheck.CheckToken, Footer.updateFooter)
 
 module.exports = Route
  
