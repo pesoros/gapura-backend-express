@@ -4,7 +4,7 @@ const jwtCheck = require('../helper/jwt')
 const Route = express.Router()
 
 Route.get('/', Attention.getAll)
-    .patch('/update', jwtCheck.CheckToken, Attention.updateAttention)
+    .patch('/update', Attention.updateAttention)
 
 module.exports = Route
  
