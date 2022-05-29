@@ -50,16 +50,16 @@ module.exports = {
             } else {
                 if (image === '-') {
                     if (file !== '-') {
-                        quertext = `title, attention, file`
-                        valtext = `'${title}', '${attention}', '${file}'`
+                        quertext = `title, attention, createdAt, file`
+                        valtext = `'${title}', '${attention}', ${timestamp}, '${file}'`
                     } 
                 } else {
                     if (file === '-') {
-                        quertext = `title, attention, image`
-                        valtext = `'${title}', '${attention}', '${image}'`
+                        quertext = `title, attention, createdAt, image`
+                        valtext = `'${title}', '${attention}', ${timestamp}, '${image}'`
                     } else {
-                        quertext = `title, attention, image, file`
-                        valtext = `'${title}', '${attention}', '${image}', '${file}'`
+                        quertext = `title, attention, createdAt, image, file`
+                        valtext = `'${title}', '${attention}', ${timestamp}, '${image}', '${file}'`
                     }
                 }
             }
@@ -82,7 +82,8 @@ module.exports = {
             if (image === '-' && file === '-' ) {
                 query =  `UPDATE assets SET
                 title = '${title}',
-                attention = '${attention}'
+                attention = '${attention}',
+                updatedAt = '${timestamp}'
                 WHERE id = '${assets_id}'`
             } else {
                 if (image === '-') {
@@ -90,6 +91,7 @@ module.exports = {
                         query =  `UPDATE assets SET
                         title = '${title}',
                         attention = '${attention}',
+                        updatedAt = '${timestamp}',
                         file = '${file}'
                         WHERE id = '${assets_id}'`
                     } 
@@ -98,12 +100,14 @@ module.exports = {
                         query =  `UPDATE assets SET
                         title = '${title}',
                         attention = '${attention}',
+                        updatedAt = '${timestamp}',
                         image = '${image}'
                         WHERE id = '${assets_id}'`
                     } else {
                         query =  `UPDATE assets SET
                         title = '${title}',
                         attention = '${attention}',
+                        updatedAt = '${timestamp}',
                         image = '${image}',
                         file = '${file}'
                         WHERE id = '${assets_id}'`

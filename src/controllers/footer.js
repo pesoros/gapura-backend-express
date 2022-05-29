@@ -28,7 +28,7 @@ module.exports = {
         const address = request.body.address
         const phone = request.body.phone
         const dinas = request.body.dinas
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {

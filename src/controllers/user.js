@@ -69,7 +69,7 @@ module.exports = {
         const email = request.body.email
         const phone = request.body.phone
         const password = request.body.password
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         const passwordHash = await bcrypt.hashSync(password, salt);
 
@@ -100,7 +100,7 @@ module.exports = {
         const email = request.body.email
         const phone = request.body.phone
         const password = request.body.password
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         const passwordHash = await bcrypt.hashSync(password, salt);
 

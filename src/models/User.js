@@ -43,8 +43,8 @@ module.exports = {
     },
     addUser: (fullname, username, email, phone, password, timestamp) => {
         return new Promise((resolve, reject) => {
-            let quertext = `fullname, username, email, phone, password`
-            let valtext = `'${fullname}', '${username}', '${email}', '${phone}', '${password}'`
+            let quertext = `fullname, username, email, phone, password, createdAt`
+            let valtext = `'${fullname}', '${username}', '${email}', '${phone}', '${password}', '${timestamp}'`
 
             const query = `INSERT INTO user (${quertext}) VALUES (${valtext})`
             connection.query(query, (error, result) => {
@@ -66,7 +66,8 @@ module.exports = {
                 username = '${username}',
                 email = '${email}',
                 phone = '${phone}',
-                password = '${password}'
+                password = '${password}',
+                updatedAt = '${timestamp}'
                 WHERE id = '${user_id}'`
 
             connection.query(query, (error, result) => {

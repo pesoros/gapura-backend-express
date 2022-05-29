@@ -135,7 +135,7 @@ module.exports = {
         const attention = request.body.attention || '-'
         const image = fileName
         const file = fileNameDocument
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {
@@ -206,7 +206,7 @@ module.exports = {
         const attention = request.body.attention || '-'
         const image = fileName
         const file = fileNameDocument
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {

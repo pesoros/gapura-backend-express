@@ -44,21 +44,21 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let quertext = ''
             if (image === '-' && background === '-' ) {
-                quertext = `title, subtitle, description`
-                valtext = `'${title}', '${subtitle}', '${description}'`
+                quertext = `title, subtitle, description, createdAt`
+                valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}`
             } else {
                 if (image === '-') {
                     if (background !== '-') {
-                        quertext = `title, subtitle, description, background`
-                        valtext = `'${title}', '${subtitle}', '${description}', '${background}'`
+                        quertext = `title, subtitle, description, createdAt, background`
+                        valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}, '${background}'`
                     } 
                 } else {
                     if (background === '-') {
-                        quertext = `title, subtitle, description, image`
-                        valtext = `'${title}', '${subtitle}', '${description}', '${image}'`
+                        quertext = `title, subtitle, description, createdAt, image`
+                        valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}, '${image}'`
                     } else {
-                        quertext = `title, subtitle, description, image, background`
-                        valtext = `'${title}', '${subtitle}', '${description}', '${image}', '${background}'`
+                        quertext = `title, subtitle, description, createdAt, image, background`
+                        valtext = `'${title}', '${subtitle}', '${description}', ${timestamp}, '${image}', '${background}'`
                     }
                 }
             }
@@ -81,7 +81,8 @@ module.exports = {
                 query =  `UPDATE categories SET
                 title = '${title}',
                 subtitle = '${subtitle}',
-                description = '${description}'
+                description = '${description}',
+                updatedAt = '${timestamp}'
                 WHERE id = '${categories_id}'`
             } else {
                 if (image === '-') {
@@ -90,6 +91,7 @@ module.exports = {
                         title = '${title}',
                         subtitle = '${subtitle}',
                         description = '${description}',
+                        updatedAt = '${timestamp}',
                         background = '${background}'
                         WHERE id = '${categories_id}'`
                     } 
@@ -99,6 +101,7 @@ module.exports = {
                         title = '${title}',
                         subtitle = '${subtitle}',
                         description = '${description}',
+                        updatedAt = '${timestamp}',
                         image = '${image}'
                         WHERE id = '${categories_id}'`
                     } else {
@@ -107,6 +110,7 @@ module.exports = {
                         subtitle = '${subtitle}',
                         description = '${description}',
                         background = '${background}',
+                        updatedAt = '${timestamp}',
                         image = '${image}'
                         WHERE id = '${categories_id}'`
                     }

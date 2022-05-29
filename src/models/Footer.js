@@ -22,7 +22,8 @@ module.exports = {
             copyright = '${copyright}',
             address = '${address}',
             phone = '${phone}',
-            dinas = '${dinas}'`
+            dinas = '${dinas}',
+            updatedAt = '${timestamp}'`
 
             connection.query(query, (error, result) => {
                 if(error) {

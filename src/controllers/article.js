@@ -130,7 +130,7 @@ module.exports = {
         const sublabel = request.body.sublabel
         const description = request.body.description
         const image = fileName
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {
@@ -185,7 +185,7 @@ module.exports = {
         const sublabel = request.body.sublabel
         const description = request.body.description
         const image = fileName
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {

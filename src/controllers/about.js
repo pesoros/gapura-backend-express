@@ -100,7 +100,7 @@ module.exports = {
         const title = request.body.title
         const description = request.body.description
         const image = fileName
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {

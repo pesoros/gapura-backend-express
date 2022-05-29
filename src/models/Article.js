@@ -58,11 +58,11 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let quertext = ''
             if (image === '-') {
-                quertext = `categories_id, title, label, sublabel, description, slug`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}'`
+                quertext = `categories_id, title, label, sublabel, description, slug, createdAt`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', ${timestamp}`
             } else {
-                quertext = `categories_id, title, label, sublabel, description, slug, image`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${image}'`
+                quertext = `categories_id, title, label, sublabel, description, slug, createdAt, image`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', ${timestamp}, '${image}'`
             }
             const query = `INSERT INTO articles (${quertext}) VALUES (${valtext})`
             connection.query(query, (error, result) => {
@@ -84,7 +84,8 @@ module.exports = {
                 title = '${title}',
                 label = '${label}',
                 sublabel = '${sublabel}',
-                description = '${description}'
+                description = '${description}',
+                updatedAt = '${timestamp}'
                 WHERE id = '${article_id}'`
             } else {
                 query =  `UPDATE articles SET
@@ -93,6 +94,7 @@ module.exports = {
                 label = '${label}',
                 sublabel = '${sublabel}',
                 description = '${description}',
+                updatedAt = '${timestamp}',
                 image = '${image}'
                 WHERE id = '${article_id}'`
             }

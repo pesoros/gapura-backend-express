@@ -47,12 +47,14 @@ module.exports = {
             if (image === '-') {
                 query =  `UPDATE settingAbout SET
                 title = '${title}',
-                description = '${description}'
+                description = '${description}',
+                updatedAt = '${timestamp}'
                 WHERE id = '${about_id}'`
             } else {
                 query =  `UPDATE settingAbout SET
                 title = '${title}',
                 description = '${description}',
+                updatedAt = '${timestamp}',
                 image = '${image}'
                 WHERE id = '${about_id}'`
             }

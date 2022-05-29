@@ -122,7 +122,7 @@ module.exports = {
         const description = request.body.description
         const image = fileName
         const background = fileNameBackground
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {
@@ -194,7 +194,7 @@ module.exports = {
         const description = request.body.description
         const image = fileName
         const background = fileNameBackground
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {

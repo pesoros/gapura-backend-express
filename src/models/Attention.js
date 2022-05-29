@@ -14,12 +14,13 @@ module.exports = {
             })
         })
     },
-    updateAttention: (content) => {
+    updateAttention: (content,timestamp) => {
         return new Promise((resolve, reject) => {
             let query = ''
 
                 query =  `UPDATE attention SET
-                content = '${content}'`
+                content = '${content}',
+                updatedAt = '${timestamp}'`
 
             connection.query(query, (error, result) => {
                 if(error) {

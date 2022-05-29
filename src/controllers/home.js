@@ -35,6 +35,33 @@ module.exports = {
                 data.imagelink = request.get('host')+ '/images/home/' + data.image
             }
             
+            let arrpush = []
+            let articleList = []
+            const categoriesList = await Home.getCategories()
+
+            if (position == 'wdg_terbaru') {
+                for (let key = 0; key < categoriesList.length; key++) {
+                    const element = categoriesList[key];
+                    arrpush = await Home.getArticlesTerbaru(element.id)
+                    if (arrpush) {
+                        articleList.push(arrpush[0])
+                    }
+                }
+            } else if (position == 'wdg_edisi_lama') {
+                const d = new Date();
+                let month = d.getMonth();
+                month = month + 1
+                for (let key = 0; key < categoriesList.length; key++) {
+                    const element = categoriesList[key];
+                    arrpush = await Home.getArticlesLama(element.id,month)
+                    if (arrpush.length !== 0) {
+                        articleList.push(arrpush[0])
+                    }
+                }
+            }
+
+            data.articleList = articleList
+
             misc.response(response, 200, false, 'Successfull get single Home', data, request.originalUrl)
 
         } catch(error) {
@@ -72,7 +99,7 @@ module.exports = {
         const title = request.body.title
         const subtitle = request.body.subtitle
         const image = fileName
-        const timestamp = request.timestamp
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
         try {
             if(error === false) {

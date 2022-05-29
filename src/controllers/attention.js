@@ -23,10 +23,11 @@ module.exports = {
         let error = false
 
         const content = request.body.content
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
         try {
             if(error === false) {
-                await Attention.updateAttention(content) 
+                await Attention.updateAttention(content,timestamp) 
 
                 const data = {
                     content,
