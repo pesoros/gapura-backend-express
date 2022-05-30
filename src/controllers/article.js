@@ -55,7 +55,10 @@ module.exports = {
         const article_id = request.params.article_id
 
         try {
-            const data = await Article.getSingleArticle(article_id)
+            let data = await Article.getSingleArticle(article_id)
+            data.articleLama = await Article.getArticlesLama()
+            data.articleBaru = await Article.getArticlesTerbaru()
+
             if (!data) {
                 return misc.response(response, 400, false, 'Data not found')
             }

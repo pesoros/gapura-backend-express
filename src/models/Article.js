@@ -121,4 +121,37 @@ module.exports = {
             })
         })
     },
+    getArticlesTerbaru: () => {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT TOP 2 art.*, cat.title as categories
+            FROM articles art, categories cat
+            WHERE art.categories_id = cat.id
+            AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
+            ORDER BY art.createdAt DESC`
+            connection.query(query, (error, result) => {
+                if (error) {
+                    reject(new Error(error))
+                } else {
+                    resolve(result)
+                }
+            })
+        })
+    },
+    getArticlesLama: () => {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT TOP 4 art.*, cat.title as categories
+            FROM articles art, categories cat
+            WHERE art.categories_id = cat.id 
+            AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
+            AND art.createdAt <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+            ORDER BY art.id DESC`
+            connection.query(query, (error, result) => {
+                if (error) {
+                    reject(new Error(error))
+                } else {
+                    resolve(result)
+                }
+            })
+        })
+    },
 }
