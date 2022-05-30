@@ -123,11 +123,11 @@ module.exports = {
     },
     getArticlesTerbaru: () => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT TOP 2 art.*, cat.title as categories
+            const query = `SELECT art.*, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = cat.id
             AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
-            ORDER BY art.createdAt DESC`
+            ORDER BY art.createdAt DESC LIMIT 2`
             connection.query(query, (error, result) => {
                 if (error) {
                     reject(new Error(error))
@@ -139,12 +139,12 @@ module.exports = {
     },
     getArticlesLama: () => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT TOP 4 art.*, cat.title as categories
+            const query = `SELECT art.*, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = cat.id 
             AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
             AND art.createdAt <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-            ORDER BY art.id DESC`
+            ORDER BY art.id DESC LIMIT 4`
             connection.query(query, (error, result) => {
                 if (error) {
                     reject(new Error(error))
