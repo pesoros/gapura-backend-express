@@ -74,7 +74,7 @@ module.exports = {
             FROM articles art, categories cat
             WHERE categories_id = ${categories_id}
             AND art.categories_id = cat.id
-            ORDER BY createdAt DESC`
+            ORDER BY art.createdAt DESC`
             connection.query(query, (error, result) => {
                 if (error) {
                     reject(new Error(error))
@@ -90,9 +90,9 @@ module.exports = {
             FROM articles art, categories cat
             WHERE categories_id = ${categories_id}
             AND art.categories_id = cat.id 
-            AND createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
-            AND createdAt <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-            ORDER BY id DESC`
+            AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
+            AND art.createdAt <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+            ORDER BY art.id DESC`
             connection.query(query, (error, result) => {
                 if (error) {
                     reject(new Error(error))
