@@ -28,7 +28,7 @@ module.exports = {
                 if (element.image == null) {
                     element.imagelink = null
                 } else {
-                    element.imagelink = request.get('host')+ '/images/about/' + element.image
+                    element.imagelink = request.get('host')+ ':81/images/about/' + element.image
                 }
             });
 
@@ -60,7 +60,7 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.get('host')+ '/images/about/' + data.image
+                data.imagelink = request.get('host')+ ':81/images/about/' + data.image
             }
             
             misc.response(response, 200, false, 'Successfull get single about', data, request.originalUrl)
