@@ -32,7 +32,7 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.get('host')+ ':81/images/home/' + data.image
+                data.imagelink = request.get('host')+ '/images/home/' + data.image
             }
             
             let arrpush = []

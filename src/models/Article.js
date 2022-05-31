@@ -17,11 +17,14 @@ module.exports = {
         return new Promise((resolve, reject) => {
             const query = `SELECT art.*, cat.title as categories
             FROM articles art, categories cat
-            WHERE art.title LIKE '%${search}%'
+            WHERE art.title LIKE ?
             AND art.categories_id = cat.id
-            AND art.categories_id = '${category}'
+            AND art.categories_id = ?
             ORDER BY art.${sortBy} ${sort} LIMIT ${offset}, ${limit}`
-            connection.query(query, (error, result) => {
+            connection.query(query, [
+                search,
+                category
+            ], (error, result) => {
                 if (error) {
                     reject(new Error(error))
                 } else {
