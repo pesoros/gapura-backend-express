@@ -15,13 +15,9 @@ module.exports = {
     },
     getAll: (offset, limit, sort, sortBy, search, category) => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories
-            FROM articles art, categories cat
-            WHERE art.title LIKE '%${search}%'
-            AND art.categories_id = cat.id
-            AND art.categories_id = '${category}'
-            ORDER BY art.${sortBy} ${sort} LIMIT ${offset}, ${limit}`
-            connection.query(query, (error, result) => {
+            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? `
+            const qvalues = [search, category]
+            connection.query(query, qvalues, (error, result) => {
                 if (error) {
                     reject(new Error(error))
                 } else {
