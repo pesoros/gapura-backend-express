@@ -3,7 +3,7 @@ const connection = require('../configs/db')
 module.exports = {
     getArticleCount: () => {
         return new Promise ((resolve, reject) => {
-            const query = `SELECT COUNT(*) total from articles WHERE publishedAt <= NOW()`
+            const query = `SELECT COUNT(*) total from articles WHERE createdAt <= NOW()`
             connection.query(query, (error, result) => {
                 if(error) {
                     reject(new Error(error))
@@ -15,7 +15,7 @@ module.exports = {
     },
     getAll: (offset, limit, sort, sortBy, search, category) => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE publishedAt <= NOW() AND art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? `
+            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE createdAt <= NOW() AND art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? `
             const qvalues = [search, category]
             connection.query(query, qvalues, (error, result) => {
                 if (error) {
@@ -50,15 +50,15 @@ module.exports = {
             })
         })
     },
-    addArticle: (categories_id, title, label, sublabel, description, image, slug, publishedAt, timestamp) => {
+    addArticle: (categories_id, title, label, sublabel, description, image, slug , publishedAt, timestamp) => {
         return new Promise((resolve, reject) => {
             let quertext = ''
             if (image === '-') {
-                quertext = `categories_id, title, label, sublabel, description, slug, createdAt, publishedAt`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${timestamp}', '${publishedAt}'`
+                quertext = `categories_id, title, label, sublabel, description, slug, createdAt`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${publishedAt}'`
             } else {
-                quertext = `categories_id, title, label, sublabel, description, slug, createdAt, publishedAt, image`
-                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${timestamp}', '${publishedAt}', '${image}'`
+                quertext = `categories_id, title, label, sublabel, description, slug, createdAt, image`
+                valtext = `'${categories_id}', '${title}', '${label}', '${sublabel}', '${description}', '${slug}', '${publishedAt}', '${image}'`
             }
             const query = `INSERT INTO articles (${quertext}) VALUES (${valtext})`
             connection.query(query, (error, result) => {
@@ -81,7 +81,7 @@ module.exports = {
                 label = '${label}',
                 sublabel = '${sublabel}',
                 description = '${description}',
-                publishedAt = '${publishedAt}',
+                createdAt = '${publishedAt}',
                 updatedAt = '${timestamp}'
                 WHERE id = '${article_id}'`
             } else {
@@ -91,7 +91,7 @@ module.exports = {
                 label = '${label}',
                 sublabel = '${sublabel}',
                 description = '${description}',
-                publishedAt = '${publishedAt}',
+                createdAt = '${publishedAt}',
                 updatedAt = '${timestamp}',
                 image = '${image}'
                 WHERE id = '${article_id}'`
@@ -124,8 +124,8 @@ module.exports = {
             const query = `SELECT art.*, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = cat.id
-            AND art.publishedAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
-            ORDER BY art.publishedAt DESC LIMIT 2`
+            AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
+            ORDER BY art.createdAt DESC LIMIT 2`
             connection.query(query, (error, result) => {
                 if (error) {
                     reject(new Error(error))
@@ -140,8 +140,8 @@ module.exports = {
             const query = `SELECT art.*, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = cat.id 
-            AND art.publishedAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
-            AND art.publishedAt <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+            AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
+            AND art.createdAt <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
             ORDER BY art.id DESC LIMIT 4`
             connection.query(query, (error, result) => {
                 if (error) {
