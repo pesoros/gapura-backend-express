@@ -134,6 +134,7 @@ module.exports = {
         const description = request.body.description
         const image = fileName
         const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
+        const publishedAt = request.body.publishedAt || timestamp
 
         try {
             if(error === false) {
@@ -189,6 +190,7 @@ module.exports = {
         const description = request.body.description
         const image = fileName
         const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
+        const publishedAt = request.body.publishedAt || timestamp
 
         try {
             if(error === false) {
