@@ -138,7 +138,7 @@ module.exports = {
 
         try {
             if(error === false) {
-                const response_addArticle = await Article.addArticle(categories_id, title, label, sublabel, description, image, slug, timestamp)
+                const response_addArticle = await Article.addArticle(categories_id, title, label, sublabel, description, image, slug, publishedAt, timestamp)
                 const data = {
                     categories_id,
                     slug,
@@ -194,7 +194,7 @@ module.exports = {
 
         try {
             if(error === false) {
-                await Article.updateArticle(article_id, categories_id, title, label, sublabel, description, image, timestamp)
+                await Article.updateArticle(article_id, categories_id, title, label, sublabel, description, image, publishedAt, timestamp)
 
                 const data = {
                     article_id,
