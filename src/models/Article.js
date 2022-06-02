@@ -18,7 +18,7 @@ module.exports = {
             let adminq = ''
             let categoryq = ''
             if (category) {
-                adminq = ' AND art.categories_id = ' + category 
+                categoryq = ' AND art.categories_id = ' + category 
             }
             if (admin !== false) {
                 adminq = ' AND art.createdAt <= NOW() ' 
