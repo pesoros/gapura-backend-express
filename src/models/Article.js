@@ -15,7 +15,7 @@ module.exports = {
     },
     getAll: (offset, limit, sort, sortBy, search, category) => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE createdAt <= NOW() AND art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? `
+            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE art.createdAt <= NOW() AND art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? `
             const qvalues = [search, category]
             connection.query(query, qvalues, (error, result) => {
                 if (error) {
