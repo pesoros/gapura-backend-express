@@ -16,11 +16,15 @@ module.exports = {
     getAll: (offset, limit, sort, sortBy, search, category, admin) => {
         return new Promise((resolve, reject) => {
             let adminq = ''
-            if (admin !== true) {
-                adminq = 'AND art.createdAt <= NOW() ' 
+            let categoryq = ''
+            if (category) {
+                adminq = ' AND art.categories_id = ' + category 
             }
-            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? ?`
-            const qvalues = [search, category,adminq]
+            if (admin !== true) {
+                adminq = ' AND art.createdAt <= NOW() ' 
+            }
+            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id ? ?`
+            const qvalues = [search, categoryq,adminq]
             connection.query(query, qvalues, (error, result) => {
                 if (error) {
                     reject(new Error(error))
