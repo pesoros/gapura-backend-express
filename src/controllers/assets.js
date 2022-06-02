@@ -30,12 +30,12 @@ module.exports = {
                 if (element.image == null) {
                     element.imagelink = null
                 } else {
-                    element.imagelink = request.protocol +'://'+ request.get('host')+ process.env.BASE_PORT + '/images/assets/' + element.image
+                    element.imagelink = request.protocol +'://'+ request.get('host')+  '/images/assets/' + element.image
                 }
                 if (element.file == null) {
                     element.filelink = null
                 } else {
-                    element.filelink = request.protocol +'://'+ request.get('host')+ process.env.BASE_PORT + '/images/assets/' + element.file
+                    element.filelink = request.protocol +'://'+ request.get('host')+  '/images/assets/' + element.file
                 }
             });
 
@@ -67,13 +67,13 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.protocol +'://'+ request.get('host')+ process.env.BASE_PORT + '/images/assets/' + data.image
+                data.imagelink = request.protocol +'://'+ request.get('host')+  '/images/assets/' + data.image
             }
 
             if (data.file == null) {
                 data.filelink = null
             } else {
-                data.filelink = request.protocol +'://'+ request.get('host')+ process.env.BASE_PORT + '/images/assets/' + data.file
+                data.filelink = request.protocol +'://'+ request.get('host')+  '/images/assets/' + data.file
             }
             
             misc.response(response, 200, false, 'Successfull get single Assets', data, request.originalUrl)
