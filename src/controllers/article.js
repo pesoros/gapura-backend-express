@@ -15,12 +15,13 @@ module.exports = {
             const sort = request.query.sort || 'DESC'
             const category = request.query.categories_id || 1
             const sortBy = request.query.sortBy || 'createdAt'
+            const admin = request.query.admin || false
             const offset = (page - 1) * limit
         try {
             const total = await Article.getArticleCount()
             const prevPage = page === 1 ? 1 : page - 1
             const nextPage = page === total[0].total ? total[0].total : page + 1
-            const data = await Article.getAll(offset, limit, sort, sortBy, search, category)
+            const data = await Article.getAll(offset, limit, sort, sortBy, search, category,admin)
 
             if (data.length == 0) {
                 return misc.response(response, 400, false, 'Data not found')

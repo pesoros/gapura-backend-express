@@ -13,10 +13,14 @@ module.exports = {
             })
         })
     },
-    getAll: (offset, limit, sort, sortBy, search, category) => {
+    getAll: (offset, limit, sort, sortBy, search, category, admin) => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE art.createdAt <= NOW() AND art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? `
-            const qvalues = [search, category]
+            let adminq = ''
+            if (admin !== true) {
+                adminq = 'AND art.createdAt <= NOW() ' 
+            }
+            const query = `SELECT art.*, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id AND art.categories_id = ? ?`
+            const qvalues = [search, category,adminq]
             connection.query(query, qvalues, (error, result) => {
                 if (error) {
                     reject(new Error(error))
