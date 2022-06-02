@@ -15,7 +15,7 @@ module.exports = {
             const sort = request.query.sort || 'DESC'
             const category = request.query.categories_id || null
             const sortBy = request.query.sortBy || 'createdAt'
-            const admin = request.query.admin || false
+            const admin = request.query.admin || null
             const offset = (page - 1) * limit
         try {
             const total = await Article.getArticleCount()
