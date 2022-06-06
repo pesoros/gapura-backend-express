@@ -43,6 +43,13 @@ module.exports = {
                 for (let key = 0; key < categoriesList.length; key++) {
                     const element = categoriesList[key];
                     arrpush = await Home.getArticlesTerbaru(element.id)
+                    arrpush.forEach(element => {
+                        if (element.image == null) {
+                            element.imagelink = null
+                        } else {
+                            element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                        }
+                    });
                     if (arrpush.length !== 0) {
                         articleList.push(arrpush[0])
                     }
@@ -54,6 +61,13 @@ module.exports = {
                 for (let key = 0; key < categoriesList.length; key++) {
                     const element = categoriesList[key];
                     arrpush = await Home.getArticlesLama(element.id,month)
+                    arrpush.forEach(element => {
+                        if (element.image == null) {
+                            element.imagelink = null
+                        } else {
+                            element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                        }
+                    });
                     if (arrpush.length !== 0) {
                         articleList.push(arrpush[0])
                     }

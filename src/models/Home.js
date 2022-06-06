@@ -70,7 +70,7 @@ module.exports = {
     },
     getArticlesTerbaru: (categories_id) => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories
+            const query = `SELECT art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, updatedAt, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = ${categories_id}
             AND art.categories_id = cat.id
@@ -87,7 +87,7 @@ module.exports = {
     },
     getArticlesLama: (categories_id,month) => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories
+            const query = `SELECT art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, updatedAt, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = ${categories_id}
             AND art.categories_id = cat.id 
