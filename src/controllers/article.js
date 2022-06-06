@@ -31,7 +31,7 @@ module.exports = {
                 if (element.image == null) {
                     element.imagelink = null
                 } else {
-                    element.imagelink = request.protocol +'://'+ request.get('host')+  '/images/articles/' + element.image
+                    element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
                 }
             });
 
@@ -66,7 +66,7 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.protocol +'://'+ request.get('host')+  '/images/articles/' + data.image
+                data.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
             }
 
             misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)
@@ -90,7 +90,7 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.protocol +'://'+ request.get('host')+  '/images/articles/' + data.image
+                data.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
             }
             
             misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)

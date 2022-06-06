@@ -25,12 +25,12 @@ module.exports = {
                 if (element.image == null) {
                     element.imagelink = null
                 } else {
-                    element.imagelink = request.protocol +'://'+ request.get('host')+  '/images/categories/' + element.image
+                    element.imagelink = 'https://'+ request.get('host')+  '/images/categories/' + element.image
                 }
                 if (element.background == null) {
                     element.backgroundlink = null
                 } else {
-                    element.backgroundlink = request.protocol +'://'+ request.get('host')+  '/images/categories/' + element.background
+                    element.backgroundlink = 'https://'+ request.get('host')+  '/images/categories/' + element.background
                 }
             });
 
@@ -54,12 +54,12 @@ module.exports = {
             if (data.image == null) {
                 data.imagelink = null
             } else {
-                data.imagelink = request.protocol +'://'+ request.get('host')+  '/images/categories/' + data.image
+                data.imagelink = 'https://'+ request.get('host')+  '/images/categories/' + data.image
             }
             if (data.background == null) {
                 data.backgroundlink = null
             } else {
-                data.backgroundlink = request.protocol +'://'+ request.get('host')+  '/images/categories/' + data.background
+                data.backgroundlink = 'https://'+ request.get('host')+  '/images/categories/' + data.background
             }
             
             misc.response(response, 200, false, 'Successfull get single Categories', data, request.originalUrl)
