@@ -23,7 +23,7 @@ module.exports = {
             if (!admin) {
                 adminq = ' AND art.createdAt <= NOW() ' 
             }
-            const query = `SELECT art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, art.updatedAt, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id ${adminq} ${categoryq}`
+            const query = `SELECT art.id, art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, art.updatedAt, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id ${adminq} ${categoryq}`
             const qvalues = [search]
             connection.query(query, qvalues, (error, result) => {
                 if (error) {
