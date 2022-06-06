@@ -5,7 +5,7 @@ const Route = express.Router()
 
 Route.get('/', Home.getAll)
     .get('/show/:position', Home.getSingle)
-    .patch('/', jwtCheck.CheckToken, Home.updateHome)
+    .patch('/',  Home.updateHome)
 
 module.exports = Route
  

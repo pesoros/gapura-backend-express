@@ -6,8 +6,8 @@ const Route = express.Router()
 
 Route.get('/', User.getAll)
     .get('/show/:user_id', User.getSingleUser)
-    .post('/add', jwtCheck.CheckToken, User.addUser)
-    .patch('/update', jwtCheck.CheckToken, User.updateUser)
-    .delete('/delete/:user_id', jwtCheck.CheckToken, User.deleteUser)
+    .post('/add',  User.addUser)
+    .patch('/update',  User.updateUser)
+    .delete('/delete/:user_id',  User.deleteUser)
 
 module.exports = Route

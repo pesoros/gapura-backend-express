@@ -6,8 +6,8 @@ const Route = express.Router()
 Route.get('/', Article.getAll)
     .get('/show/:article_id', Article.getSingleArticle)
     .get('/slug/:slug', Article.getSingleArticleSlug)
-    .post('/add', jwtCheck.CheckToken, Article.addArticle)
-    .patch('/update', jwtCheck.CheckToken, Article.updateArticle)
-    .delete('/delete/:article_id', jwtCheck.CheckToken, Article.deleteArticle)
+    .post('/add',  Article.addArticle)
+    .patch('/update',  Article.updateArticle)
+    .delete('/delete/:article_id',  Article.deleteArticle)
 
 module.exports = Route
