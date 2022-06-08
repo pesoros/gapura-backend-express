@@ -90,8 +90,8 @@ module.exports = {
             FROM articles art, categories cat
             WHERE art.categories_id = ${categories_id}
             AND art.categories_id = cat.id 
-            AND MONTH(art.createdAt) = MONTH(NOW() - INTERVAL 2 MONTH) 
-            AND (YEAR(art.createdAt) = YEAR(NOW()) OR YEAR(art.createdAt) = YEAR(NOW() - INTERVAL 2 MONTH))
+            AND MONTH(art.createdAt) = MONTH(NOW() - INTERVAL 1 MONTH) 
+            AND (YEAR(art.createdAt) = YEAR(NOW()) OR YEAR(art.createdAt) = YEAR(NOW() - INTERVAL 1 MONTH))
             ORDER BY art.id DESC`
             connection.query(query, (error, result) => {
                 if (error) {
