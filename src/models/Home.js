@@ -74,7 +74,6 @@ module.exports = {
             FROM articles art, categories cat
             WHERE art.categories_id = ${categories_id}
             AND art.categories_id = cat.id
-            AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
             ORDER BY art.createdAt DESC`
             connection.query(query, (error, result) => {
                 if (error) {
