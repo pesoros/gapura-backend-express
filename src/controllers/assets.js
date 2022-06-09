@@ -125,9 +125,9 @@ module.exports = {
             }
 
             const fileContents = new Buffer(binImage, 'base64')
-                fs.writeFile(`public/images/assets/${fileName}`, fileContents, (err) => {
+                fs.writeFile(`public/images/assets/${fileNameDocument}`, fileContents, (err) => {
                 if (err) return console.error(err)
-                console.log('file saved to ', `public/images/assets/${fileName}`)
+                console.log('file saved to ', `public/images/assets/${fileNameDocument}`)
             })
         }
 
