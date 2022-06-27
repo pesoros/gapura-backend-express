@@ -129,7 +129,7 @@ module.exports = {
     },
     getArticlesTerbaru: () => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories
+            const query = `SELECT art.id, art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, art.updatedAt, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = cat.id
             AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
@@ -145,7 +145,7 @@ module.exports = {
     },
     getArticlesLama: () => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT art.*, cat.title as categories
+            const query = `SELECT art.id, art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, art.updatedAt, cat.title as categories
             FROM articles art, categories cat
             WHERE art.categories_id = cat.id 
             AND art.createdAt >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
