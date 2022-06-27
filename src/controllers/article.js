@@ -76,6 +76,18 @@ module.exports = {
                 }
             });
 
+            if (data.articleBaru.image == null) {
+                data.articleBaru.imagelink = null
+            } else {
+                data.articleBaru.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
+            }
+
+            if (data.articleLama.image == null) {
+                data.articleLama.imagelink = null
+            } else {
+                data.articleLama.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
+            }
+
             if (!data) {
                 return misc.response(response, 400, false, 'Data not found')
             }
