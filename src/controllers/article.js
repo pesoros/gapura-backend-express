@@ -61,10 +61,10 @@ module.exports = {
             data.articleBaru = await Article.getArticlesTerbaru()
 
             data.articleLama.forEach(element => {
-                if (data.articleLama.image == null) {
-                    data.articleLama.imagelink = null
+                if (element.image == null) {
+                    element.imagelink = null
                 } else {
-                    data.articleLama.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                    element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
                 }
             });
 
