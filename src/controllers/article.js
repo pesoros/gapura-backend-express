@@ -60,21 +60,14 @@ module.exports = {
             data.articleLama = await Article.getArticlesLama()
             data.articleBaru = await Article.getArticlesTerbaru()
 
-            data.articleLama.forEach(element => {
-                if (element.image == null) {
-                    element.imagelink = null
-                } else {
-                    element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
-                }
-            });
-
-            data.articleBaru.forEach(element => {
-                if (element.image == null) {
-                    element.imagelink = null
-                } else {
-                    element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
-                }
-            });
+            if (!data) {
+                return misc.response(response, 400, false, 'Data not found')
+            }
+            if (data.image == null) {
+                data.imagelink = null
+            } else {
+                data.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
+            }
 
             if (data.articleBaru.image == null) {
                 data.articleBaru.imagelink = null
@@ -87,16 +80,7 @@ module.exports = {
             } else {
                 data.articleLama.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
             }
-
-            if (!data) {
-                return misc.response(response, 400, false, 'Data not found')
-            }
-            if (data.image == null) {
-                data.imagelink = null
-            } else {
-                data.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
-            }
-
+            
             misc.response(response, 200, false, 'Successfull get single Article', data, request.originalUrl)
 
         } catch(error) {
