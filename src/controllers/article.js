@@ -70,9 +70,9 @@ module.exports = {
 
             data.articleBaru.forEach(element => {
                 if (element.image == null) {
-                    data.articleBaru.imagelink = null
+                    element.imagelink = null
                 } else {
-                    data.articleBaru.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                    element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
                 }
             });
 
