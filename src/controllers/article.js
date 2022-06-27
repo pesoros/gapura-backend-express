@@ -60,21 +60,21 @@ module.exports = {
             data.articleLama = await Article.getArticlesLama()
             data.articleBaru = await Article.getArticlesTerbaru()
 
-            // data.articleLama.forEach(element => {
-            //     if (element.image == null) {
-            //         element.imagelink = null
-            //     } else {
-            //         element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
-            //     }
-            // });
+            data.articleLama.forEach(element => {
+                if (data.articleLama.image == null) {
+                    data.articleLama.imagelink = null
+                } else {
+                    data.articleLama.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                }
+            });
 
-            // data.articleBaru.forEach(element => {
-            //     if (element.image == null) {
-            //         element.imagelink = null
-            //     } else {
-            //         element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
-            //     }
-            // });
+            data.articleBaru.forEach(element => {
+                if (element.image == null) {
+                    data.articleBaru.imagelink = null
+                } else {
+                    data.articleBaru.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                }
+            });
 
             if (!data) {
                 return misc.response(response, 400, false, 'Data not found')
