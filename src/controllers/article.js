@@ -60,6 +60,22 @@ module.exports = {
             data.articleLama = await Article.getArticlesLama()
             data.articleBaru = await Article.getArticlesTerbaru()
 
+            data.articleLama.forEach(element => {
+                if (element.image == null) {
+                    element.imagelink = null
+                } else {
+                    element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                }
+            });
+
+            data.articleBaru.forEach(element => {
+                if (element.image == null) {
+                    element.imagelink = null
+                } else {
+                    element.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + element.image
+                }
+            });
+
             if (!data) {
                 return misc.response(response, 400, false, 'Data not found')
             }
