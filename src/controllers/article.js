@@ -57,8 +57,6 @@ module.exports = {
 
         try {
             let data = await Article.getSingleArticle(article_id)
-            data.articleLama = await Article.getArticlesLama()
-            data.articleBaru = await Article.getArticlesTerbaru()
 
             if (!data) {
                 return misc.response(response, 400, false, 'Data not found')
@@ -68,8 +66,9 @@ module.exports = {
             } else {
                 data.imagelink = 'https://'+ request.get('host')+  '/images/articles/' + data.image
             }
-
-
+            
+            data.articleLama = await Article.getArticlesLama()
+            data.articleBaru = await Article.getArticlesTerbaru()
 
             data.articleLama.forEach(element => {
                 if (element.image == null) {
