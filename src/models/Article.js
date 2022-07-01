@@ -1,10 +1,19 @@
 const connection = require('../configs/db')
 
 module.exports = {
-    getArticleCount: () => {
+    getArticleCount: (offset, limit, sort, sortBy, search, category, admin) => {
         return new Promise ((resolve, reject) => {
-            const query = `SELECT COUNT(*) total from articles WHERE createdAt <= NOW()`
-            connection.query(query, (error, result) => {
+            let adminq = ''
+            let categoryq = ''
+            if (category) {
+                categoryq = ' AND categories_id = ' + category 
+            }
+            if (!admin) {
+                adminq = ' AND createdAt <= NOW() ' 
+            }
+            const query = `SELECT COUNT(*) total from articles WHERE title LIKE CONCAT(?,'%') ${adminq} ${categoryq}`
+            const qvalues = [search]
+            connection.query(query, qvalues, (error, result) => {
                 if(error) {
                     reject(new Error(error))
                 } else {
@@ -23,7 +32,7 @@ module.exports = {
             if (!admin) {
                 adminq = ' AND art.createdAt <= NOW() ' 
             }
-            const query = `SELECT art.id, art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, art.updatedAt, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id ${adminq} ${categoryq}`
+            const query = `SELECT art.id, art.categories_id, art.title, art.slug, art.label, art.sublabel, art.image, art.createdAt, art.updatedAt, cat.title as categories FROM articles art, categories cat WHERE art.title LIKE CONCAT(?,'%') AND art.categories_id = cat.id ${adminq} ${categoryq} ORDER BY art.${sortBy} ${sort} LIMIT ${offset}, ${limit}`
             const qvalues = [search]
             connection.query(query, qvalues, (error, result) => {
                 if (error) {

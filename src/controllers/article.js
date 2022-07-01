@@ -18,9 +18,10 @@ module.exports = {
             const admin = request.query.admin
             const offset = (page - 1) * limit
         try {
-            const total = await Article.getArticleCount()
-            const prevPage = page === 1 ? 1 : page - 1
-            const nextPage = page === total[0].total ? total[0].total : page + 1
+            const total = await Article.getArticleCount(offset, limit, sort, sortBy, search, category,admin)
+            const totalPage =  total[0].total / limit
+            const prevPage = page === 1 ? null : page - 1
+            const nextPage = page === totalPage ? null : page + 1
             const data = await Article.getAll(offset, limit, sort, sortBy, search, category,admin)
 
             if (data.length == 0) {
@@ -35,12 +36,15 @@ module.exports = {
                 }
             });
 
+            const prevLink = prevPage !== null ? `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + prevPage)}` : ''
+            const nextLink = nextPage !== null ? `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}` : ''
+
             let pageDetail = {
-                total: Math.ceil(total[0].total),
+                total: Math.ceil(totalPage),
                 per_page: limit,
                 current_page: page,
-                nextLink: `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + nextPage)}`,
-                prevLink: `${request.get('host')}${request.originalUrl.replace('page=' + page, 'page=' + prevPage)}`
+                prevLink: prevLink,
+                nextLink: nextLink
             }
 
             misc.responsePagination(response, 200, false, 'Successfull get all data', pageDetail, data, request.originalUrl)
