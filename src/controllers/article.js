@@ -21,7 +21,7 @@ module.exports = {
             const total = await Article.getArticleCount(offset, limit, sort, sortBy, search, category,admin)
             const totalPage =  total[0].total / limit
             const prevPage = page === 1 ? null : page - 1
-            const nextPage = page === totalPage ? null : page + 1
+            const nextPage = page === Math.ceil(totalPage) ? null : page + 1
             const data = await Article.getAll(offset, limit, sort, sortBy, search, category,admin)
 
             if (data.length == 0) {
